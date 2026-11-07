@@ -128,6 +128,44 @@ footer .logo {
   width: 160px;
   height: 100px;
 }
+.navbar-logo {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 10px;
+}
+/* Display the original symbol and lettering side by side. */
+.navbar-logo-symbol,
+.navbar-logo-wordmark {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.navbar-logo-symbol {
+  width: 48px;
+  height: 57px;
+}
+.navbar-logo-symbol img {
+  position: absolute;
+  width: 220px;
+  max-width: none;
+  height: auto;
+  left: -88px;
+  top: -59px;
+}
+.navbar-logo-wordmark {
+  width: 162px;
+  height: 35px;
+}
+.navbar-logo-wordmark img {
+  position: absolute;
+  width: 224px;
+  max-width: none;
+  height: auto;
+  left: -32px;
+  top: -126px;
+}
 .desktop-nav {
   display: flex;
   align-items: center;
@@ -1011,10 +1049,6 @@ footer {
   }
   .header-inner {
     height: 76px;
-  }
-  .header .logo {
-    width: 110px;
-    height: 68px;
   }
   .mobile-nav {
     display: flex;

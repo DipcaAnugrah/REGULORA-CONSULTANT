@@ -13,7 +13,19 @@ import {
 } from "lucide-react";
 import { services, generalFaq, steps } from "@/content/services";
 import { Navigation, WhatsApp } from "./client";
-export function Logo() {
+export function Logo({ horizontal = false }: { horizontal?: boolean }) {
+  if (horizontal) {
+    return (
+      <Link href="/" className="navbar-logo" aria-label="Regulora Consultant — Beranda">
+        <span className="navbar-logo-symbol" aria-hidden="true">
+          <Image src="/images/regulora-logo.png" alt="" width={3950} height={3950} sizes="224px" priority />
+        </span>
+        <span className="navbar-logo-wordmark" aria-hidden="true">
+          <Image src="/images/regulora-logo.png" alt="" width={3950} height={3950} sizes="224px" priority />
+        </span>
+      </Link>
+    );
+  }
   return (
     <Link href="/" className="logo" aria-label="Regulora Consultant — Beranda">
       <Image
@@ -32,7 +44,7 @@ export function Header() {
   return (
     <header className="header">
       <div className="container header-inner">
-        <Logo />
+        <Logo horizontal />
         <Navigation />
       </div>
     </header>
