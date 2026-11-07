@@ -93,7 +93,7 @@ const entries = [
     short: "SPP-IRT",
     category: "Pangan & kosmetik",
     summary:
-      "Pemetaan kebutuhan perizinan untuk usaha pangan industri rumah tangga.",
+      "Pendampingan Pemenuhan Komitmen Produksi Pangan Olahan Industri yang merupakan perizinan bagi produk pangan tertentu produksi skala usaha industri rumah tangga",
     audience:
       "Pelaku usaha pangan rumah tangga yang ingin meninjau kesesuaian jalur perizinan produknya.",
     focus:
@@ -112,7 +112,8 @@ const entries = [
     name: "Notifikasi Kosmetik BPOM",
     short: "Notifikasi Kosmetik",
     category: "Pangan & kosmetik",
-    summary: "Pendampingan kebutuhan notifikasi untuk produk kosmetik Anda.",
+    summary:
+      "Pendampingan persetujuan notifikasi yang harus dipenuhi sebelum produk kosmetik diedarkan di Indonesia.",
     audience:
       "Pemilik brand kosmetik, pelaku usaha kontrak produksi, produsen, dan importir kosmetik.",
     focus:
