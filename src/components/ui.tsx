@@ -15,13 +15,16 @@ import { services, generalFaq, steps } from "@/content/services";
 import { Navigation, WhatsApp } from "./client";
 export function Logo() {
   return (
-    <Link href="/" className="logo">
-      <span className="logo-mark" aria-hidden="true">
-        r<span>.</span>
-      </span>
-      <span>
-        REGULORA<small>CONSULTANT</small>
-      </span>
+    <Link href="/" className="logo" aria-label="Regulora Consultant — Beranda">
+      <Image
+        src="/images/regulora-logo.png"
+        alt="Regulora Consultant"
+        width={3950}
+        height={3950}
+        sizes="224px"
+        className="logo-image"
+        priority
+      />
     </Link>
   );
 }
