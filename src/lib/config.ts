@@ -9,8 +9,12 @@ export function normalizePhone(value: string) {
   return /^[1-9]\d{7,14}$/.test(number) ? number : null;
 }
 export const whatsappNumber = normalizePhone(
-  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "",
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "081949387620",
 );
+export const businessPhone =
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "081949387620";
+export const businessEmail =
+  process.env.NEXT_PUBLIC_BUSINESS_EMAIL || "reguloraconsultant@gmail.com";
 export function whatsappUrl(message: string) {
   return whatsappNumber
     ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`

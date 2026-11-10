@@ -1,7 +1,12 @@
 import { ContactForm } from "@/components/contact-form";
 import { Breadcrumb } from "@/components/ui";
 import { WhatsApp } from "@/components/client";
-import { leadsReady, whatsappNumber } from "@/lib/config";
+import {
+  businessEmail,
+  businessPhone,
+  leadsReady,
+  whatsappNumber,
+} from "@/lib/config";
 import { services } from "@/content/services";
 import { meta } from "@/lib/seo";
 export const dynamic = "force-dynamic";
@@ -47,20 +52,15 @@ export default async function Page({
             pada percakapan pertama.
           </p>
           {whatsappNumber && <WhatsApp service={layanan} />}{" "}
-          {process.env.NEXT_PUBLIC_BUSINESS_EMAIL && (
-            <a
-              className="text-link"
-              href={`mailto:${process.env.NEXT_PUBLIC_BUSINESS_EMAIL}`}
-            >
-              {process.env.NEXT_PUBLIC_BUSINESS_EMAIL}
-            </a>
-          )}
-          {!whatsappNumber && !process.env.NEXT_PUBLIC_BUSINESS_EMAIL && (
-            <p>
-              Kanal kontak sedang dipersiapkan. Silakan kunjungi kembali halaman
-              ini.
-            </p>
-          )}
+          <a className="text-link" href={`mailto:${businessEmail}`}>
+            {businessEmail}
+          </a>
+          <a
+            className="text-link"
+            href={`tel:${businessPhone.replace(/[^\d+]/g, "")}`}
+          >
+            {businessPhone}
+          </a>
           <h2 style={{ marginTop: 35 }}>Apa yang dibahas?</h2>
           <ul>
             <li>Jenis produk dan kegiatan usaha</li>

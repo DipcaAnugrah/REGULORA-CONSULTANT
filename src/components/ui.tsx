@@ -13,15 +13,16 @@ import {
 } from "lucide-react";
 import { services, generalFaq, steps } from "@/content/services";
 import { Navigation, WhatsApp } from "./client";
+import { businessEmail, businessPhone } from "@/lib/config";
 export function Logo({ horizontal = false }: { horizontal?: boolean }) {
   if (horizontal) {
     return (
       <Link href="/" className="navbar-logo" aria-label="Regulora Consultant — Beranda">
         <span className="navbar-logo-symbol" aria-hidden="true">
-          <Image src="/images/regulora-logo.png" alt="" width={3950} height={3950} sizes="224px" priority />
+          <Image src="/images/regulora-symbol.png" alt="" width={940} height={1120} priority />
         </span>
         <span className="navbar-logo-wordmark" aria-hidden="true">
-          <Image src="/images/regulora-logo.png" alt="" width={3950} height={3950} sizes="224px" priority />
+          <Image src="/images/regulora-wordmark.png" alt="" width={2900} height={700} priority />
         </span>
       </Link>
     );
@@ -29,10 +30,10 @@ export function Logo({ horizontal = false }: { horizontal?: boolean }) {
   return (
     <Link href="/" className="logo" aria-label="Regulora Consultant — Beranda">
       <Image
-        src="/images/regulora-logo.png"
+        src="/images/regulora-logo-full.png"
         alt="Regulora Consultant"
-        width={3950}
-        height={3950}
+        width={2850}
+        height={1850}
         sizes="224px"
         className="logo-image"
         priority
@@ -90,11 +91,10 @@ export function Footer() {
           <h3>Mari mulai percakapan</h3>
           <p>Ceritakan kebutuhan produk dan usaha Anda.</p>
           <WhatsApp className="text-link" label="Hubungi kami" />
-          {process.env.NEXT_PUBLIC_BUSINESS_EMAIL && (
-            <a href={`mailto:${process.env.NEXT_PUBLIC_BUSINESS_EMAIL}`}>
-              {process.env.NEXT_PUBLIC_BUSINESS_EMAIL}
-            </a>
-          )}
+          <a href={`mailto:${businessEmail}`}>{businessEmail}</a>
+          <a href={`tel:${businessPhone.replace(/[^\d+]/g, "")}`}>
+            {businessPhone}
+          </a>
           {process.env.NEXT_PUBLIC_LEGAL_IDENTITY && (
             <p>{process.env.NEXT_PUBLIC_LEGAL_IDENTITY}</p>
           )}
