@@ -1,11 +1,11 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/static-link";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowUpRight, MessageCircle, Menu, X } from "lucide-react";
 import { services } from "@/content/services";
-import { whatsappUrl } from "@/lib/config";
+import { gtmId, whatsappUrl } from "@/lib/config";
 import { track } from '@/lib/analytics';
 export { track } from '@/lib/analytics';
 export function WhatsApp({
@@ -119,16 +119,35 @@ export function Navigation() {
 export function Analytics() {
   const [consent, setConsent] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const [gtmQueued, setGtmQueued] = useState(false);
   const path = usePathname();
   const last = useRef("");
   const ga = process.env.NEXT_PUBLIC_GA_ID;
   const ads = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
-  const id = ga || ads;
+  const id = gtmId || ga || ads;
   useEffect(() => {
     queueMicrotask(() =>
       setConsent(localStorage.getItem("regulora-consent") || "unset"),
     );
   }, []);
+  useEffect(() => {
+    // The consent default must be in the dataLayer before gtm.js runs.
+    if (!gtmId || consent !== "accepted" || window.reguloraGtm) return;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () {
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer.push(arguments);
+    };
+    window.gtag("consent", "default", {
+      analytics_storage: "granted",
+      ad_storage: "granted",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+    });
+    window.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
+    window.reguloraGtm = true;
+    queueMicrotask(() => setGtmQueued(true));
+  }, [consent]);
   useEffect(() => {
     if (!loaded || consent !== "accepted" || last.current === path) return;
     last.current = path;
@@ -143,6 +162,13 @@ export function Analytics() {
   function choose(value: string) {
     localStorage.setItem("regulora-consent", value);
     setConsent(value);
+    if (value === "accepted" && window.gtag) {
+      // Re-accepting after a rejection in the same visit restores measurement.
+      window.gtag("consent", "update", {
+        analytics_storage: "granted",
+        ad_storage: "granted",
+      });
+    }
     if (value === "rejected" && window.gtag) {
       window.gtag("consent", "update", {
         analytics_storage: "denied",
@@ -155,7 +181,14 @@ export function Analytics() {
   }
   return (
     <>
-      {consent === "accepted" && (
+      {gtmId && gtmQueued && (
+        <Script
+          id="gtm"
+          src={`https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(gtmId)}`}
+          onReady={() => setLoaded(true)}
+        />
+      )}
+      {!gtmId && consent === "accepted" && (
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id!)}`}
           onReady={() => {

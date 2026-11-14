@@ -18,3 +18,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ].map((p) => ({ url: siteUrl + p }))
     : [];
 }
+
+export const dynamic = "force-static";

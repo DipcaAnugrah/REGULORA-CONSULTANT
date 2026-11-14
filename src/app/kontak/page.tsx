@@ -4,23 +4,15 @@ import { WhatsApp } from "@/components/client";
 import {
   businessEmail,
   businessPhone,
-  leadsReady,
   whatsappNumber,
 } from "@/lib/config";
-import { services } from "@/content/services";
 import { meta } from "@/lib/seo";
-export const dynamic = "force-dynamic";
 export const metadata = meta(
   "Kontak & Konsultasi",
   "Ceritakan kebutuhan perizinan produk dan usaha Anda melalui konsultasi Regulora.",
   "/kontak",
 );
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Promise<{ layanan?: string }>;
-}) {
-  const { layanan } = await searchParams;
+export default function Page() {
   return (
     <>
       <section className="page-hero">
@@ -39,28 +31,27 @@ export default async function Page({
         </div>
       </section>
       <section className="container page-body two-column">
-        <ContactForm
-          ready={leadsReady()}
-          initialService={
-            services.some((s) => s.slug === layanan) ? layanan! : ""
-          }
-        />
+        <ContactForm />
         <aside className="info-panel">
           <h2>Lebih nyaman berdiskusi langsung?</h2>
           <p>
             Pilih kanal yang tersedia. Tidak perlu mengirim dokumen sensitif
             pada percakapan pertama.
           </p>
-          {whatsappNumber && <WhatsApp service={layanan} />}{" "}
+          <div className="contact-channels">
+          {whatsappNumber && <WhatsApp />}
           <a className="text-link" href={`mailto:${businessEmail}`}>
+            <span className="contact-channel-label">Email</span>
             {businessEmail}
           </a>
           <a
             className="text-link"
             href={`tel:${businessPhone.replace(/[^\d+]/g, "")}`}
           >
+            <span className="contact-channel-label">Telepon</span>
             {businessPhone}
           </a>
+          </div>
           <h2 style={{ marginTop: 35 }}>Apa yang dibahas?</h2>
           <ul>
             <li>Jenis produk dan kegiatan usaha</li>

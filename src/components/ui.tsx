@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/static-link";
 import Image from "next/image";
 import {
   ArrowUpRight,

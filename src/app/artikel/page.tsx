@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/static-link";
 import { articles } from "@/content/services";
 import { Breadcrumb } from "@/components/ui";
 import { meta } from "@/lib/seo";

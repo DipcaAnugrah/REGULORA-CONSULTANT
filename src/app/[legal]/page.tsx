@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import Link from "@/components/static-link";
 import { legal } from "@/content/legal";
 import { meta } from "@/lib/seo";
 import { Breadcrumb } from "@/components/ui";

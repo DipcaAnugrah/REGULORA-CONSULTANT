@@ -1,0 +1,12 @@
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+# Static export writes the social share image without an extension.
+<Files "opengraph-image">
+ForceType image/png
+</Files>
+<IfModule mod_headers.c>
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-Frame-Options "DENY"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

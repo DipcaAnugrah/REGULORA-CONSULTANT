@@ -93,6 +93,21 @@ test("analytics respects consent, strips private fields and URL queries, tolerat
   ]);
   track("unknown_event");
   assert.equal(calls.length, 1);
+  const layer: unknown[] = [];
+  Object.defineProperty(globalThis, "window", {
+    configurable: true,
+    value: { reguloraGtm: true, dataLayer: layer, gtag: () => calls.push([]) },
+  });
+  track("click_whatsapp", { service: "pkrt", phone: "private" });
+  assert.equal(calls.length, 1);
+  assert.deepEqual(layer, [
+    {
+      event: "click_whatsapp",
+      service: "pkrt",
+      page_location: "https://example.test/kontak",
+      page_referrer: "",
+    },
+  ]);
   Object.defineProperty(globalThis, "localStorage", {
     configurable: true,
     value: {

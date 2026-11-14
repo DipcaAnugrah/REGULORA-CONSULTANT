@@ -1,0 +1,47 @@
+name: Deploy ke Hostinger
+
+# Setiap push ke main: build situs statis lalu upload folder out/ ke public_html via FTP.
+# Butuh repository secrets: FTP_SERVER, FTP_USERNAME, FTP_PASSWORD.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-hostinger
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SITE_URL: https://regulora-consultant.com
+      NEXT_PUBLIC_LAUNCH_READY: "true"
+      NEXT_PUBLIC_GTM_ID: GTM-MB6442QH
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run build
+
+      - name: Upload ke public_html
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          # FTP over TLS. The certificate is issued for a hostname, not the IP, so it is
+          # not verified ("loose"). Switch to protocol: ftp if the server refuses TLS.
+          protocol: ftps
+          security: loose
+          local-dir: ./out/
+          server-dir: ./public_html/

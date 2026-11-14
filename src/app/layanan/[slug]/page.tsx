@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import Link from "@/components/static-link";
 import { services } from "@/content/services";
 import { Breadcrumb, FAQ, CTA, Workflow, Trust } from "@/components/ui";
 import { WhatsApp } from "@/components/client";

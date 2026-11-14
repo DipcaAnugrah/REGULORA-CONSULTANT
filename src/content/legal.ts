@@ -10,11 +10,11 @@ export const legal = {
       ],
       [
         "Penyimpanan dan keamanan",
-        "Jika formulir diaktifkan, data dikirim melalui backend ke database Supabase dengan akses administratif terbatas. Sistem pembatasan permintaan menggunakan Upstash dan pengenal jaringan yang di-hash; isi konsultasi tidak dikirim ke layanan ini. Formulir tidak diaktifkan sebelum koneksi penyimpanan tersedia.",
+        "Formulir menyusun pesan di perangkat Anda dan membuka WhatsApp dengan isi pesan tersebut. Situs tidak menyimpan formulir ke database. Anda perlu menekan Kirim di WhatsApp untuk menyampaikan pesan kepada kami. Isi pesan diteruskan ke layanan WhatsApp ketika tautannya dibuka.",
       ],
       [
         "Analitik dan pengukuran iklan",
-        "Google Analytics atau Google Ads hanya dimuat ketika dikonfigurasi dan Anda memilih Izinkan. Preferensi disimpan di browser. Peristiwa yang diukur meliputi kunjungan halaman, pembukaan layanan, awal pengisian formulir, klik WhatsApp, dan lead yang berhasil disimpan. Nama, kontak, isi konsultasi, dan parameter URL tidak dikirim sebagai parameter event analitik. Penyedia tracking dapat memproses informasi perangkat dan jaringan sesuai kebijakannya.",
+        "Google Analytics atau Google Ads hanya dimuat ketika dikonfigurasi dan Anda memilih Izinkan. Preferensi disimpan di browser. Peristiwa yang diukur meliputi kunjungan halaman, pembukaan layanan, awal pengisian formulir, klik WhatsApp. Nama, kontak, isi konsultasi, dan parameter URL tidak dikirim sebagai parameter event analitik. Penyedia tracking dapat memproses informasi perangkat dan jaringan sesuai kebijakannya.",
       ],
       [
         "WhatsApp dan pihak ketiga",

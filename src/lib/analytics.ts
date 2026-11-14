@@ -2,6 +2,8 @@ declare global {
   interface Window {
     dataLayer: unknown[];
     gtag?: (...args: unknown[]) => void;
+    /** Set when the Google Tag Manager container is loaded. */
+    reguloraGtm?: boolean;
   }
 }
 const allowed: Record<string, string[]> = {
@@ -23,11 +25,14 @@ export function track(name: string, data: Record<string, string> = {}) {
     const safe = Object.fromEntries(
       Object.entries(data).filter(([key]) => allowed[name].includes(key)),
     );
-    window.gtag?.("event", name, {
+    const payload = {
       ...safe,
       page_location: location.origin + location.pathname,
       page_referrer: "",
-    });
+    };
+    // GTM listens for object events (Custom Event triggers); gtag.js takes commands.
+    if (window.reguloraGtm) window.dataLayer?.push({ event: name, ...payload });
+    else window.gtag?.("event", name, payload);
   } catch {
     /* Storage may be blocked by the browser. Measurement is optional. */
   }
