@@ -39,9 +39,8 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
-          # FTP over TLS. The certificate is issued for a hostname, not the IP, so it is
-          # not verified ("loose"). Switch to protocol: ftp if the server refuses TLS.
-          protocol: ftps
-          security: loose
+          # Plain FTP: Hostinger's FTPS data channel resets the connection
+          # (ECONNRESET on the data socket) with this action's FTP client.
+          protocol: ftp
           local-dir: ./out/
           server-dir: ./public_html/
