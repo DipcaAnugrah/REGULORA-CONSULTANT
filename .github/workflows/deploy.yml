@@ -34,36 +34,23 @@ jobs:
 
       - run: sudo apt-get install -y -qq lftp
 
-      # Diagnostic: report where the FTP login lands, as workflow annotations.
-      - name: Lokasi FTP
-        continue-on-error: true
-        env:
-          FTP_SERVER: ${{ secrets.FTP_SERVER }}
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-        run: |
-          ftp() { lftp --env-password -u "$FTP_USERNAME" "ftp://${FTP_SERVER#ftp://}" -e "set ftp:ssl-allow no; set net:max-retries 2; $1; bye" 2>&1 | tr '\n' ' '; }
-          echo "::notice title=pwd::$(ftp 'pwd')"
-          echo "::notice title=root::$(ftp 'cls -1a')"
-          echo "::notice title=public_html::$(ftp 'cls -1a --sort=date public_html/ | head -n 12')"
-          echo "::notice title=slash::$(ftp 'cls -1a /')"
-          echo "::notice title=up::$(ftp 'cls -1a ../')"
-          echo "::notice title=index_files::$(ftp 'find -d 4 / | grep -E "(index.html|googlef)" | head -n 20')"
-
-      # lftp mirrors against the server's real listing, so a missing folder never
-      # fails the deploy. Order: new _next assets first, then pages, then prune old
-      # build folders inside _next only (nothing else in public_html is deleted).
+      # The FTP login lands in /public_html, which is NOT the web root. The site is
+      # served from /domains/regulora-consultant.com/public_html (absolute path).
+      # lftp mirrors against the server's real listing. Order: new _next assets
+      # first, then pages, then prune old build folders inside _next only
+      # (nothing else in the web root is deleted).
       # Plain FTP: Hostinger's FTPS data channel resets the connection.
       - name: Upload ke public_html
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          TARGET: /domains/regulora-consultant.com/public_html
         run: |
           lftp --env-password -u "$FTP_USERNAME" "ftp://${FTP_SERVER#ftp://}" -e "
             set cmd:fail-exit yes; set ftp:ssl-allow no; set net:max-retries 3; set net:timeout 30;
-            mirror -R --parallel=4 out/_next/ public_html/_next/;
-            mirror -R --parallel=4 -x '^_next/' out/ public_html/;
-            mirror -R --delete --parallel=4 out/_next/ public_html/_next/;
-            rm -f public_html/.ftp-deploy-sync-state.json;
+            cls $TARGET/index.html;
+            mirror -R --parallel=4 out/_next/ $TARGET/_next/;
+            mirror -R --parallel=4 -x '^_next/' out/ $TARGET/;
+            mirror -R --delete --parallel=4 out/_next/ $TARGET/_next/;
             bye"
