@@ -3,11 +3,23 @@ import Link from "@/components/static-link";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, MessageCircle, Menu, X } from "lucide-react";
-import { services } from "@/content/services";
+import { ArrowUpRight, MessageCircle, Menu, X, Languages } from "lucide-react";
+import { getServices } from "@/content/services";
+import {
+  getDict,
+  localeFromPath,
+  localeLabel,
+  localePath,
+  locales,
+  stripLocale,
+} from "@/i18n";
 import { gtmId, whatsappUrl } from "@/lib/config";
 import { track } from '@/lib/analytics';
 export { track } from '@/lib/analytics';
+/** Client components read the language from the URL (/en/…, /zh/…, else Indonesian). */
+export function useLocale() {
+  return localeFromPath(usePathname());
+}
 export function WhatsApp({
   service,
   label,
@@ -17,15 +29,15 @@ export function WhatsApp({
   label?: string;
   className?: string;
 }) {
-  const s = services.find((x) => x.slug === service);
-  const message =
-    s?.whatsappMessage ||
-    "Halo REGULORA CONSULTANT, saya ingin berkonsultasi mengenai perizinan produk dan usaha.";
+  const lang = useLocale();
+  const t = getDict(lang).whatsapp;
+  const s = getServices(lang).find((x) => x.slug === service);
+  const message = s?.whatsappMessage || t.generalMessage;
   const href = whatsappUrl(message);
   return (
     <Link
       className={className}
-      href={href || "/kontak"}
+      href={href || localePath(lang, "/kontak")}
       target={href ? "_blank" : undefined}
       rel={href ? "noopener noreferrer" : undefined}
       onClick={(e) => {
@@ -41,49 +53,81 @@ export function WhatsApp({
           .join(", ");
         url.searchParams.set(
           "text",
-          `${message}\nHalaman: ${location.pathname}${campaign ? `\nKampanye: ${campaign}` : ""}`,
+          `${message}\n${t.pageLine}: ${location.pathname}${campaign ? `\n${t.campaignLine}: ${campaign}` : ""}`,
         );
         e.currentTarget.href = url.toString();
         track("click_whatsapp", { service: service || "general" });
       }}
     >
       <MessageCircle size={18} />
-      {label || (href ? "Konsultasi via WhatsApp" : "Konsultasi sekarang")}
+      {label || (href ? t.button : t.fallback)}
       <ArrowUpRight size={17} />
     </Link>
+  );
+}
+/** Links to the current page in each language. */
+export function LanguageSwitcher({ className = "" }: { className?: string }) {
+  const path = usePathname() || "/";
+  const lang = localeFromPath(path);
+  const base = stripLocale(path);
+  return (
+    <div
+      className={`lang-switch ${className}`}
+      role="group"
+      aria-label={getDict(lang).nav.language}
+    >
+      <Languages size={16} aria-hidden="true" />
+      {locales.map((l) => (
+        <Link
+          key={l}
+          href={localePath(l, base)}
+          hrefLang={l === "zh" ? "zh-CN" : l}
+          lang={l === "zh" ? "zh-CN" : l}
+          title={localeLabel[l].name}
+          aria-current={l === lang ? "true" : undefined}
+        >
+          {localeLabel[l].short}
+        </Link>
+      ))}
+    </div>
   );
 }
 export function Navigation() {
   const [open, setOpen] = useState(false);
   const path = usePathname();
+  const lang = localeFromPath(path);
+  const t = getDict(lang).nav;
+  const services = getServices(lang);
+  const p = (u: string) => localePath(lang, u);
   return (
     <>
-      <nav className="desktop-nav" aria-label="Navigasi utama">
-        <Link href="/" aria-current={path === "/" ? "page" : undefined}>
-          Beranda
+      <nav className="desktop-nav" aria-label={t.mainLabel}>
+        <Link href={p("/")} aria-current={path === p("/") ? "page" : undefined}>
+          {t.home}
         </Link>
-        <Link href="/tentang-kami">Tentang Kami</Link>
+        <Link href={p("/tentang-kami")}>{t.about}</Link>
         <div className="nav-dropdown">
-          <Link href="/layanan">
-            Layanan <span>⌄</span>
+          <Link href={p("/layanan")}>
+            {t.services} <span>⌄</span>
           </Link>
           <div className="dropdown-panel">
             {services.map((s) => (
-              <Link key={s.slug} href={`/layanan/${s.slug}`}>
+              <Link key={s.slug} href={p(`/layanan/${s.slug}`)}>
                 {s.name}
               </Link>
             ))}
           </div>
         </div>
-        <Link href="/artikel">Artikel</Link>
-        <Link href="/kontak">Kontak</Link>
+        <Link href={p("/artikel")}>{t.articles}</Link>
+        <Link href={p("/kontak")}>{t.contact}</Link>
       </nav>
-      <Link className="button primary header-cta" href="/kontak">
-        Konsultasi Sekarang <ArrowUpRight size={16} />
+      <LanguageSwitcher className="header-lang" />
+      <Link className="button primary header-cta" href={p("/kontak")}>
+        {t.consultNow} <ArrowUpRight size={16} />
       </Link>
       <button
         className="menu-toggle"
-        aria-label={open ? "Tutup navigasi" : "Buka navigasi"}
+        aria-label={open ? t.close : t.open}
         aria-expanded={open}
         aria-controls="mobile-menu"
         onClick={() => setOpen(!open)}
@@ -94,23 +138,24 @@ export function Navigation() {
         <nav
           id="mobile-menu"
           className="mobile-nav"
-          aria-label="Navigasi seluler"
+          aria-label={t.mobileLabel}
           onKeyDown={(e) => {
             if (e.key === "Escape") setOpen(false);
           }}
         >
           {[
-            ["/", "Beranda"],
-            ["/tentang-kami", "Tentang Kami"],
-            ["/layanan", "Semua Layanan"],
+            ["/", t.home],
+            ["/tentang-kami", t.about],
+            ["/layanan", t.allServices],
             ...services.map((s) => [`/layanan/${s.slug}`, s.name]),
-            ["/artikel", "Artikel"],
-            ["/kontak", "Konsultasi Sekarang"],
+            ["/artikel", t.articles],
+            ["/kontak", t.consultNow],
           ].map(([url, label]) => (
-            <Link href={url} key={url} onClick={() => setOpen(false)}>
+            <Link href={p(url)} key={url} onClick={() => setOpen(false)}>
               {label}
             </Link>
           ))}
+          <LanguageSwitcher className="mobile-lang" />
         </nav>
       )}
     </>
@@ -121,6 +166,7 @@ export function Analytics() {
   const [loaded, setLoaded] = useState(false);
   const [gtmQueued, setGtmQueued] = useState(false);
   const path = usePathname();
+  const t = getDict(localeFromPath(path)).cookie;
   const last = useRef("");
   const ga = process.env.NEXT_PUBLIC_GA_ID;
   const ads = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
@@ -161,8 +207,9 @@ export function Analytics() {
       page_location: location.origin + path,
       page_title: document.title,
     });
-    if (path.startsWith("/layanan/"))
-      track("view_service", { service: path.split("/")[2] });
+    const page = stripLocale(path);
+    if (page.startsWith("/layanan/"))
+      track("view_service", { service: page.split("/")[2] });
   }, [path, loaded, consent]);
   if (!id) return null;
   function choose(value: string) {
@@ -226,25 +273,24 @@ export function Analytics() {
         />
       )}
       {consent === "unset" ? (
-        <aside className="cookie" aria-label="Preferensi analitik">
-          <strong>Pilihan privasi Anda</strong>
-          <p>
-            Izinkan analitik dan pengukuran iklan untuk membantu kami memahami
-            penggunaan situs. Formulir tetap dapat digunakan tanpa persetujuan.
-          </p>
-          <Link href="/kebijakan-privasi">Baca kebijakan privasi</Link>
+        <aside className="cookie" aria-label={t.label}>
+          <strong>{t.title}</strong>
+          <p>{t.body}</p>
+          <Link href={localePath(localeFromPath(path), "/kebijakan-privasi")}>
+            {t.policyLink}
+          </Link>
           <div className="actions">
             <button
               className="button primary"
               onClick={() => choose("accepted")}
             >
-              Izinkan
+              {t.accept}
             </button>
             <button
               className="button secondary"
               onClick={() => choose("rejected")}
             >
-              Tolak
+              {t.reject}
             </button>
           </div>
         </aside>
@@ -253,7 +299,7 @@ export function Analytics() {
           className="privacy-settings"
           onClick={() => setConsent("unset")}
         >
-          Preferensi cookie
+          {t.settings}
         </button>
       )}
     </>

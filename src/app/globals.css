@@ -19,7 +19,7 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--navy);
-  font-family: var(--font-jakarta), Arial, sans-serif;
+  font-family: var(--font-jakarta), Arial, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-size: 15px;
   line-height: 1.75;
 }
@@ -228,6 +228,34 @@ footer .logo {
   padding: 12px 17px;
 }
 .menu-toggle {
+  display: none;
+}
+/* Language switcher: ID · EN · 中文 */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--navy);
+}
+.lang-switch svg {
+  margin-right: 4px;
+  color: var(--blue);
+}
+.lang-switch a {
+  padding: 6px 7px;
+  border-radius: 6px;
+  line-height: 1;
+}
+.lang-switch a:hover {
+  color: var(--blue);
+}
+.lang-switch a[aria-current] {
+  background: var(--blue);
+  color: white;
+}
+.mobile-lang {
   display: none;
 }
 .hero {
@@ -1075,6 +1103,18 @@ footer {
     padding: 10px;
     border-bottom: 1px solid var(--border);
     font-size: 13px;
+  }
+  .header-lang {
+    display: none;
+  }
+  .mobile-lang {
+    display: inline-flex;
+    margin-top: 14px;
+    font-size: 13px;
+  }
+  .mobile-nav .mobile-lang a {
+    border-bottom: 0;
+    padding: 8px 10px;
   }
   .hero h1 {
     font-size: 39px;

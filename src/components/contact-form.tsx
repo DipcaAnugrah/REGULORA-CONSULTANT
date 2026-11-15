@@ -3,11 +3,15 @@ import Link from "@/components/static-link";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { leadSchema, type LeadInput } from "@/lib/validation";
-import { services } from "@/content/services";
-import { track } from "./client";
+import { makeLeadSchema, type LeadInput } from "@/lib/validation";
+import { getServices } from "@/content/services";
+import { track, useLocale } from "./client";
+import { getDict, localePath } from "@/i18n";
 import { whatsappUrl } from "@/lib/config";
 export function ContactForm() {
+  const lang = useLocale();
+  const t = getDict(lang).form;
+  const services = getServices(lang);
   const [state, setState] = useState<"idle" | "error">("idle");
   const [message, setMessage] = useState("");
   const started = useRef(false);
@@ -17,7 +21,7 @@ export function ContactForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<LeadInput>({
-    resolver: zodResolver(leadSchema),
+    resolver: zodResolver(makeLeadSchema(lang)),
     defaultValues: {
       service: "",
       consent: false,
@@ -28,20 +32,21 @@ export function ContactForm() {
   });
   useEffect(() => {
     const service = new URLSearchParams(window.location.search).get("layanan");
-    if (services.some((item) => item.slug === service)) setValue("service", service!);
+    // Slugs are the same in every language.
+    if (getServices().some((item) => item.slug === service)) setValue("service", service!);
   }, [setValue]);
   function submit(data: LeadInput) {
-    const service = services.find((item) => item.slug === data.service)?.name || "Belum yakin";
+    const service = services.find((item) => item.slug === data.service)?.name || t.messageUnsure;
     const href = whatsappUrl([
-      "Halo REGULORA CONSULTANT, saya ingin berkonsultasi.",
-      "Nama: " + data.name, "WhatsApp: " + data.phone,
-      data.email ? "Email: " + data.email : "",
-      "Layanan: " + service, "Kebutuhan: " + data.description,
+      t.messageIntro,
+      `${t.messageName}: ${data.name}`, `${t.messagePhone}: ${data.phone}`,
+      data.email ? `${t.messageEmail}: ${data.email}` : "",
+      `${t.messageService}: ${service}`, `${t.messageNeeds}: ${data.description}`,
     ].filter(Boolean).join("\n"));
-    if (!href) { setState("error"); setMessage("WhatsApp belum tersedia. Silakan hubungi kami melalui email."); return; }
+    if (!href) { setState("error"); setMessage(t.noWhatsapp); return; }
     track("click_whatsapp", { service: data.service });
     setState("idle");
-    setMessage("Lanjutkan dengan menekan Kirim di WhatsApp. Membuka WhatsApp belum mengirim pesan Anda.");
+    setMessage(t.opened);
     window.location.assign(href);
   }
   return (
@@ -58,18 +63,13 @@ export function ContactForm() {
       }}
       noValidate
     >
-      <h2 style={{ fontSize: 25, marginBottom: 15 }}>
-        Ceritakan kebutuhan Anda
-      </h2>
-      <p style={{ fontSize: 12, marginBottom: 24 }}>
-        Kolom bertanda * wajib diisi. Hindari menyertakan dokumen atau informasi
-        sensitif. Tombol di bawah membuka pesan di WhatsApp; Anda perlu menekan Kirim di WhatsApp.
-      </p>
+      <h2 style={{ fontSize: 25, marginBottom: 15 }}>{t.title}</h2>
+      <p style={{ fontSize: 12, marginBottom: 24 }}>{t.intro}</p>
       <fieldset
         style={{ border: 0, padding: 0, margin: 0 }}
       >
         <div className="field">
-          <label htmlFor="name">Nama lengkap *</label>
+          <label htmlFor="name">{t.name}</label>
           <input
             id="name"
             autoComplete="name"
@@ -84,13 +84,13 @@ export function ContactForm() {
         </div>
         <div className="form-grid">
           <div className="field">
-            <label htmlFor="phone">Nomor WhatsApp *</label>
+            <label htmlFor="phone">{t.phone}</label>
             <input
               id="phone"
               type="tel"
               autoComplete="tel"
               maxLength={25}
-              placeholder="08… atau 62…"
+              placeholder={t.phonePlaceholder}
               {...register("phone")}
               aria-invalid={!!errors.phone}
               aria-describedby="phone-error"
@@ -100,7 +100,7 @@ export function ContactForm() {
             </p>
           </div>
           <div className="field">
-            <label htmlFor="email">Email (opsional)</label>
+            <label htmlFor="email">{t.email}</label>
             <input
               id="email"
               type="email"
@@ -116,31 +116,31 @@ export function ContactForm() {
           </div>
         </div>
         <div className="field">
-          <label htmlFor="service">Jenis layanan *</label>
+          <label htmlFor="service">{t.service}</label>
           <select
             id="service"
             {...register("service")}
             aria-invalid={!!errors.service}
             aria-describedby="service-error"
           >
-            <option value="">Pilih layanan</option>
+            <option value="">{t.servicePlaceholder}</option>
             {services.map((s) => (
               <option key={s.slug} value={s.slug}>
                 {s.name}
               </option>
             ))}
-            <option value="belum-tahu">Saya belum yakin</option>
+            <option value="belum-tahu">{t.serviceUnsure}</option>
           </select>
           <p id="service-error" className="field-error">
             {errors.service?.message}
           </p>
         </div>
         <div className="field">
-          <label htmlFor="description">Deskripsi kebutuhan *</label>
+          <label htmlFor="description">{t.description}</label>
           <textarea
             id="description"
             maxLength={2000}
-            placeholder="Ceritakan jenis produk, kegiatan usaha, dan bantuan yang Anda perlukan…"
+            placeholder={t.descriptionPlaceholder}
             {...register("description")}
             aria-invalid={!!errors.description}
             aria-describedby="description-error"
@@ -166,9 +166,11 @@ export function ContactForm() {
               aria-describedby="consent-error"
             />
             <span>
-              Saya menyetujui{" "}
-              <Link href="/kebijakan-privasi">Kebijakan Privasi</Link> dan
-              pemrosesan data untuk menanggapi permintaan konsultasi. *
+              {t.consentBefore}{" "}
+              <Link href={localePath(lang, "/kebijakan-privasi")}>
+                {t.consentLink}
+              </Link>{" "}
+              {t.consentAfter}
             </span>
           </label>
           <p className="field-error" id="consent-error">
@@ -179,7 +181,7 @@ export function ContactForm() {
           className="button primary"
           type="submit"
         >
-          Lanjutkan ke WhatsApp ↗
+          {t.submit}
         </button>
       </fieldset>
       {message && (

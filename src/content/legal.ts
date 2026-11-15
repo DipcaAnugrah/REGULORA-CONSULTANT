@@ -1,69 +1,9 @@
-export const legal = {
-  "kebijakan-privasi": {
-    title: "Kebijakan Privasi",
-    intro:
-      "Bagaimana data konsultasi dan preferensi privasi diproses di situs ini.",
-    sections: [
-      [
-        "Data yang Anda berikan",
-        "Formulir meminta nama, nomor WhatsApp, email opsional, layanan, deskripsi kebutuhan, dan persetujuan privasi. Data digunakan untuk menanggapi permintaan konsultasi. Jangan memasukkan nomor identitas, data kesehatan pribadi, atau dokumen rahasia ke formulir.",
-      ],
-      [
-        "Penyimpanan dan keamanan",
-        "Formulir menyusun pesan di perangkat Anda dan membuka WhatsApp dengan isi pesan tersebut. Situs tidak menyimpan formulir ke database. Anda perlu menekan Kirim di WhatsApp untuk menyampaikan pesan kepada kami. Isi pesan diteruskan ke layanan WhatsApp ketika tautannya dibuka.",
-      ],
-      [
-        "Analitik dan pengukuran iklan",
-        "Situs memakai Google Tag Manager dengan mode persetujuan (Consent Mode). Sebelum Anda memilih Izinkan, cookie analitik dan iklan tidak disimpan; Google hanya menerima sinyal tanpa cookie untuk mengukur kunjungan dan konversi secara agregat. Jika Anda memilih Tolak, alat pengukuran tidak dimuat. Preferensi disimpan di browser dan dapat diubah melalui tombol Preferensi cookie. Peristiwa yang diukur meliputi kunjungan halaman, pembukaan layanan, awal pengisian formulir, klik WhatsApp. Nama, kontak, isi konsultasi, dan parameter URL tidak dikirim sebagai parameter event analitik. Penyedia tracking dapat memproses informasi perangkat dan jaringan sesuai kebijakannya.",
-      ],
-      [
-        "WhatsApp dan pihak ketiga",
-        "Tautan WhatsApp membuka layanan pihak ketiga. Pesan dapat menyertakan halaman asal dan kode kampanye yang valid. Informasi yang Anda kirim di WhatsApp diproses sesuai kebijakan layanan tersebut.",
-      ],
-      [
-        "Pilihan dan permintaan Anda",
-        "Anda dapat menolak tracking atau mengubah pilihan melalui tombol Preferensi cookie ketika tracking tersedia. Penolakan tidak menghalangi penggunaan formulir. Untuk permintaan akses, koreksi, atau penghapusan data konsultasi, gunakan kanal pada halaman Kontak. Data disimpan selama diperlukan untuk tindak lanjut dan kewajiban yang berlaku; pengelola perlu meninjau dan menghapus data yang tidak lagi diperlukan.",
-      ],
-    ],
-  },
-  "syarat-ketentuan": {
-    title: "Syarat & Ketentuan",
-    intro: "Ketentuan dasar penggunaan situs dan permintaan konsultasi.",
-    sections: [
-      [
-        "Informasi dan konsultasi",
-        "Konten situs memberikan gambaran umum layanan. Pengiriman formulir merupakan permintaan untuk dihubungi, bukan perjanjian layanan atau pembayaran.",
-      ],
-      [
-        "Kesepakatan layanan",
-        "Pekerjaan dimulai berdasarkan ruang lingkup, biaya, dan pembagian tanggung jawab yang disepakati terpisah. Pengguna bertanggung jawab atas kebenaran serta keabsahan dokumen yang diberikan.",
-      ],
-      [
-        "Evaluasi dan hasil",
-        "Penerbitan izin dan proses evaluasi berada di bawah kewenangan instansi terkait. Tidak ada jaminan izin diterbitkan, durasi tertentu, atau hasil komersial dari penggunaan layanan.",
-      ],
-      [
-        "Penggunaan situs",
-        "Jangan menggunakan formulir untuk spam, memberikan data orang lain tanpa kewenangan, atau mengganggu keamanan situs. Pertanyaan terkait layanan dapat disampaikan melalui halaman Kontak.",
-      ],
-    ],
-  },
-  disclaimer: {
-    title: "Disclaimer",
-    intro: "Batas peran REGULORA CONSULTANT dan informasi di situs ini.",
-    sections: [
-      [
-        "Penyedia jasa independen",
-        "REGULORA CONSULTANT adalah penyedia jasa konsultasi dan pendampingan, bukan lembaga penerbit izin. Tidak ada klaim afiliasi resmi dengan BPOM, Kementerian Kesehatan, atau instansi pemerintah lainnya.",
-      ],
-      [
-        "Informasi umum",
-        "Informasi layanan dan artikel bukan pengganti penilaian terhadap kegiatan atau produk tertentu. Ketentuan dapat berubah; jalur dan daftar dokumen perlu diperiksa terhadap sumber resmi saat pengajuan.",
-      ],
-      [
-        "Tanpa jaminan penerbitan",
-        "Hasil pengajuan ditentukan oleh instansi berdasarkan evaluasi. Biaya serta perkiraan tahapan hanya dapat dibahas setelah kebutuhan dan kesiapan dokumen ditinjau.",
-      ],
-    ],
-  },
-};
+import { getDict, type Locale } from "@/i18n";
+export const legalSlugs = [
+  "kebijakan-privasi",
+  "syarat-ketentuan",
+  "disclaimer",
+] as const;
+export type LegalSlug = (typeof legalSlugs)[number];
+export const getLegal = (locale: Locale = "id") => getDict(locale).content.legal;
+export const legal = getLegal("id");
