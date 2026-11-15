@@ -46,8 +46,9 @@ jobs:
           echo "::notice title=pwd::$(ftp 'pwd')"
           echo "::notice title=root::$(ftp 'cls -1a')"
           echo "::notice title=public_html::$(ftp 'cls -1a --sort=date public_html/ | head -n 12')"
-          echo "::notice title=domains::$(ftp 'cls -1a domains/')"
-          echo "::notice title=domain_public_html::$(ftp 'cls -la domains/regulora-consultant.com/public_html/index.html')"
+          echo "::notice title=slash::$(ftp 'cls -1a /')"
+          echo "::notice title=up::$(ftp 'cls -1a ../')"
+          echo "::notice title=index_files::$(ftp 'find -d 4 / | grep -E "(index.html|googlef)" | head -n 20')"
 
       # lftp mirrors against the server's real listing, so a missing folder never
       # fails the deploy. Order: new _next assets first, then pages, then prune old
