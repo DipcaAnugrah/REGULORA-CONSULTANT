@@ -34,6 +34,21 @@ jobs:
 
       - run: sudo apt-get install -y -qq lftp
 
+      # Diagnostic: report where the FTP login lands, as workflow annotations.
+      - name: Lokasi FTP
+        continue-on-error: true
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          ftp() { lftp --env-password -u "$FTP_USERNAME" "ftp://${FTP_SERVER#ftp://}" -e "set ftp:ssl-allow no; set net:max-retries 2; $1; bye" 2>&1 | tr '\n' ' '; }
+          echo "::notice title=pwd::$(ftp 'pwd')"
+          echo "::notice title=root::$(ftp 'cls -1a')"
+          echo "::notice title=public_html::$(ftp 'cls -1a --sort=date public_html/ | head -n 12')"
+          echo "::notice title=domains::$(ftp 'cls -1a domains/')"
+          echo "::notice title=domain_public_html::$(ftp 'cls -la domains/regulora-consultant.com/public_html/index.html')"
+
       # lftp mirrors against the server's real listing, so a missing folder never
       # fails the deploy. Order: new _next assets first, then pages, then prune old
       # build folders inside _next only (nothing else in public_html is deleted).
