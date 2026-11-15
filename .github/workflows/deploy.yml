@@ -32,15 +32,22 @@ jobs:
       - run: npm run lint
       - run: npm run build
 
+      - run: sudo apt-get install -y -qq lftp
+
+      # lftp mirrors against the server's real listing, so a missing folder never
+      # fails the deploy. Order: new _next assets first, then pages, then prune old
+      # build folders inside _next only (nothing else in public_html is deleted).
+      # Plain FTP: Hostinger's FTPS data channel resets the connection.
       - name: Upload ke public_html
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 21
-          # Plain FTP: Hostinger's FTPS data channel resets the connection
-          # (ECONNRESET on the data socket) with this action's FTP client.
-          protocol: ftp
-          local-dir: ./out/
-          server-dir: ./public_html/
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          lftp --env-password -u "$FTP_USERNAME" "ftp://${FTP_SERVER#ftp://}" -e "
+            set cmd:fail-exit yes; set ftp:ssl-allow no; set net:max-retries 3; set net:timeout 30;
+            mirror -R --parallel=4 out/_next/ public_html/_next/;
+            mirror -R --parallel=4 -x '^_next/' out/ public_html/;
+            mirror -R --delete --parallel=4 out/_next/ public_html/_next/;
+            rm -f public_html/.ftp-deploy-sync-state.json;
+            bye"
