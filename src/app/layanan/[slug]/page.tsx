@@ -29,18 +29,18 @@ export default async function Page({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Beranda", item: siteUrl },
+      { "@type": "ListItem", position: 1, name: "Beranda", item: siteUrl + "/" },
       {
         "@type": "ListItem",
         position: 2,
         name: "Layanan",
-        item: siteUrl + "/layanan",
+        item: siteUrl + "/layanan/",
       },
       {
         "@type": "ListItem",
         position: 3,
         name: s.name,
-        item: siteUrl + "/layanan/" + slug,
+        item: siteUrl + "/layanan/" + slug + "/",
       },
     ],
   };

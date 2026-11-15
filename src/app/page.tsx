@@ -18,6 +18,49 @@ import {
 } from "@/components/ui";
 import { WhatsApp } from "@/components/client";
 import { meta } from "@/lib/seo";
+import { siteUrl, whatsappNumber, businessEmail } from "@/lib/config";
+import { services } from "@/content/services";
+// Business identity for search engines. No street address is published, so
+// none is claimed here.
+const businessSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": siteUrl + "/#business",
+      name: "REGULORA CONSULTANT",
+      url: siteUrl + "/",
+      logo: siteUrl + "/images/regulora-logo-full.png",
+      image: siteUrl + "/images/hero.jpeg",
+      description:
+        "Konsultasi dan pendampingan perizinan alat kesehatan, PKRT, pangan, dan kosmetik.",
+      ...(whatsappNumber ? { telephone: "+" + whatsappNumber } : {}),
+      email: businessEmail,
+      areaServed: { "@type": "Country", name: "Indonesia" },
+      knowsLanguage: "id",
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Layanan Perizinan",
+        itemListElement: services.map((s) => ({
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: s.name,
+            url: siteUrl + "/layanan/" + s.slug + "/",
+          },
+        })),
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": siteUrl + "/#website",
+      name: "REGULORA CONSULTANT",
+      url: siteUrl + "/",
+      inLanguage: "id-ID",
+      publisher: { "@id": siteUrl + "/#business" },
+    },
+  ],
+};
 export const metadata = meta(
   "Konsultasi Perizinan Produk & Usaha",
   "Pendampingan perizinan alat kesehatan, PKRT, pangan, dan kosmetik yang jelas dan terarah.",
@@ -26,6 +69,12 @@ export const metadata = meta(
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(businessSchema).replace(/</g, "\\u003c"),
+        }}
+      />
       <section className="hero container">
         <div className="hero-copy">
           <span className="eyebrow">

@@ -15,7 +15,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
         "/kebijakan-privasi",
         "/syarat-ketentuan",
         "/disclaimer",
-      ].map((p) => ({ url: siteUrl + p }))
+        // trailingSlash: true — list the final URLs, not ones that 301-redirect.
+      ].map((p) => ({ url: siteUrl + p + "/" }))
     : [];
 }
 
