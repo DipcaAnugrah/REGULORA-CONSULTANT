@@ -164,6 +164,9 @@ footer .logo {
   font-size: 12px;
   font-weight: 600;
 }
+.desktop-nav a {
+  white-space: nowrap;
+}
 .desktop-nav a:hover,
 .desktop-nav a[aria-current] {
   color: var(--blue);
@@ -230,32 +233,67 @@ footer .logo {
 .menu-toggle {
   display: none;
 }
-/* Language switcher: ID · EN · 中文 */
-.lang-switch {
+/* Language switcher: flag + language name */
+.flag {
+  flex-shrink: 0;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px #17233d26;
+}
+.lang-dropdown {
+  position: relative;
+}
+.lang-current {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
-  font-size: 11px;
+  gap: 8px;
+  padding: 9px 11px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: white;
+  color: var(--navy);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.lang-current:hover {
+  border-color: var(--blue);
+}
+.lang-current[aria-expanded="true"] .lang-chevron {
+  transform: rotate(180deg);
+}
+.lang-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 50;
+  min-width: 180px;
+  padding: 6px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px #17233d18;
+}
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 7px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--navy);
 }
-.lang-switch svg {
-  margin-right: 4px;
+.lang-option:hover {
+  background: #edf2fa;
+}
+.lang-option[aria-current] {
   color: var(--blue);
 }
-.lang-switch a {
-  padding: 6px 7px;
-  border-radius: 6px;
-  line-height: 1;
+.lang-check {
+  margin-left: auto;
 }
-.lang-switch a:hover {
-  color: var(--blue);
-}
-.lang-switch a[aria-current] {
-  background: var(--blue);
-  color: white;
-}
-.mobile-lang {
+.lang-list {
   display: none;
 }
 .hero {
@@ -1026,6 +1064,9 @@ footer {
   .container {
     width: calc(100% - 56px);
   }
+  .lang-current span {
+    display: none;
+  }
   .desktop-nav {
     gap: 15px;
   }
@@ -1104,17 +1145,16 @@ footer {
     border-bottom: 1px solid var(--border);
     font-size: 13px;
   }
-  .header-lang {
+  .lang-dropdown {
     display: none;
   }
-  .mobile-lang {
-    display: inline-flex;
-    margin-top: 14px;
-    font-size: 13px;
+  .lang-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 12px;
   }
-  .mobile-nav .mobile-lang a {
+  .mobile-nav .lang-list a {
     border-bottom: 0;
-    padding: 8px 10px;
   }
   .hero h1 {
     font-size: 39px;

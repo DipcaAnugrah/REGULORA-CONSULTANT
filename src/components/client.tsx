@@ -3,7 +3,8 @@ import Link from "@/components/static-link";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, MessageCircle, Menu, X, Languages } from "lucide-react";
+import { ArrowUpRight, MessageCircle, Menu, X, Check, ChevronDown } from "lucide-react";
+import { Flag } from "./flag";
 import { getServices } from "@/content/services";
 import {
   getDict,
@@ -12,6 +13,7 @@ import {
   localePath,
   locales,
   stripLocale,
+  type Locale,
 } from "@/i18n";
 import { gtmId, whatsappUrl } from "@/lib/config";
 import { track } from '@/lib/analytics';
@@ -65,30 +67,72 @@ export function WhatsApp({
     </Link>
   );
 }
-/** Links to the current page in each language. */
-export function LanguageSwitcher({ className = "" }: { className?: string }) {
+function LanguageLinks({ lang, base }: { lang: Locale; base: string }) {
+  return locales.map((l) => (
+    <Link
+      key={l}
+      className="lang-option"
+      href={localePath(l, base)}
+      hrefLang={l === "zh" ? "zh-CN" : l}
+      lang={l === "zh" ? "zh-CN" : l}
+      aria-current={l === lang ? "true" : undefined}
+    >
+      <Flag locale={l} />
+      <span>{localeLabel[l].name}</span>
+      {l === lang && <Check size={15} className="lang-check" aria-hidden="true" />}
+    </Link>
+  ));
+}
+/** Flag + language name. Header: dropdown; mobile menu: plain list. */
+export function LanguageSwitcher({
+  variant = "dropdown",
+}: {
+  variant?: "dropdown" | "list";
+}) {
   const path = usePathname() || "/";
   const lang = localeFromPath(path);
   const base = stripLocale(path);
+  const label = getDict(lang).nav.language;
+  const [open, setOpen] = useState(false);
+  const box = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const close = (e: Event) => {
+      if (e instanceof KeyboardEvent ? e.key === "Escape" : !box.current?.contains(e.target as Node))
+        setOpen(false);
+    };
+    document.addEventListener("pointerdown", close);
+    document.addEventListener("keydown", close);
+    return () => {
+      document.removeEventListener("pointerdown", close);
+      document.removeEventListener("keydown", close);
+    };
+  }, [open]);
+  if (variant === "list")
+    return (
+      <div className="lang-list" role="group" aria-label={label}>
+        <LanguageLinks lang={lang} base={base} />
+      </div>
+    );
   return (
-    <div
-      className={`lang-switch ${className}`}
-      role="group"
-      aria-label={getDict(lang).nav.language}
-    >
-      <Languages size={16} aria-hidden="true" />
-      {locales.map((l) => (
-        <Link
-          key={l}
-          href={localePath(l, base)}
-          hrefLang={l === "zh" ? "zh-CN" : l}
-          lang={l === "zh" ? "zh-CN" : l}
-          title={localeLabel[l].name}
-          aria-current={l === lang ? "true" : undefined}
-        >
-          {localeLabel[l].short}
-        </Link>
-      ))}
+    <div className="lang-dropdown" ref={box}>
+      <button
+        type="button"
+        className="lang-current"
+        aria-label={`${label}: ${localeLabel[lang].name}`}
+        aria-expanded={open}
+        aria-controls="lang-menu"
+        onClick={() => setOpen(!open)}
+      >
+        <Flag locale={lang} />
+        <span>{localeLabel[lang].name}</span>
+        <ChevronDown size={15} aria-hidden="true" className="lang-chevron" />
+      </button>
+      {open && (
+        <div id="lang-menu" className="lang-menu" role="group" aria-label={label}>
+          <LanguageLinks lang={lang} base={base} />
+        </div>
+      )}
     </div>
   );
 }
@@ -121,7 +165,7 @@ export function Navigation() {
         <Link href={p("/artikel")}>{t.articles}</Link>
         <Link href={p("/kontak")}>{t.contact}</Link>
       </nav>
-      <LanguageSwitcher className="header-lang" />
+      <LanguageSwitcher />
       <Link className="button primary header-cta" href={p("/kontak")}>
         {t.consultNow} <ArrowUpRight size={16} />
       </Link>
@@ -155,7 +199,7 @@ export function Navigation() {
               {label}
             </Link>
           ))}
-          <LanguageSwitcher className="mobile-lang" />
+          <LanguageSwitcher variant="list" />
         </nav>
       )}
     </>

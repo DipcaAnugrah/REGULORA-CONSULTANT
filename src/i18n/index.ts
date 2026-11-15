@@ -27,9 +27,9 @@ export const ogLocale: Record<Locale, string> = {
   zh: "zh_CN",
 };
 export const localeLabel: Record<Locale, { short: string; name: string }> = {
-  id: { short: "ID", name: "Bahasa Indonesia" },
+  id: { short: "ID", name: "Indonesia" },
   en: { short: "EN", name: "English" },
-  zh: { short: "中文", name: "简体中文" },
+  zh: { short: "中文", name: "中文" },
 };
 
 /** Path of `path` (Indonesian form, e.g. "/layanan/pkrt") in another language. */
