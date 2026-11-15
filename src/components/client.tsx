@@ -131,17 +131,22 @@ export function Analytics() {
     );
   }, []);
   useEffect(() => {
+    // Consent Mode: GTM loads for every visitor who has not refused, with
+    // storage denied until "Izinkan". Google then sees the tag and can model
+    // conversions without cookies. An explicit "Tolak" keeps GTM off.
     // The consent default must be in the dataLayer before gtm.js runs.
-    if (!gtmId || consent !== "accepted" || window.reguloraGtm) return;
+    if (!gtmId || !consent || consent === "rejected" || window.reguloraGtm)
+      return;
+    const granted = consent === "accepted" ? "granted" : "denied";
     window.dataLayer = window.dataLayer || [];
     window.gtag = function () {
       // eslint-disable-next-line prefer-rest-params
       window.dataLayer.push(arguments);
     };
     window.gtag("consent", "default", {
-      analytics_storage: "granted",
-      ad_storage: "granted",
-      ad_user_data: "denied",
+      analytics_storage: granted,
+      ad_storage: granted,
+      ad_user_data: granted,
       ad_personalization: "denied",
     });
     window.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
@@ -149,7 +154,8 @@ export function Analytics() {
     queueMicrotask(() => setGtmQueued(true));
   }, [consent]);
   useEffect(() => {
-    if (!loaded || consent !== "accepted" || last.current === path) return;
+    if (!loaded || !consent || consent === "rejected" || last.current === path)
+      return;
     last.current = path;
     track("page_view", {
       page_location: location.origin + path,
@@ -167,6 +173,7 @@ export function Analytics() {
       window.gtag("consent", "update", {
         analytics_storage: "granted",
         ad_storage: "granted",
+        ad_user_data: "granted",
       });
     }
     if (value === "rejected" && window.gtag) {

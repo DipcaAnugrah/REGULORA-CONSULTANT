@@ -108,6 +108,14 @@ test("analytics respects consent, strips private fields and URL queries, tolerat
       page_referrer: "",
     },
   ]);
+  // Consent Mode: GTM measures undecided visitors cookieless, never refusals.
+  layer.length = 0;
+  consent = "unset";
+  track("click_whatsapp", { service: "pkrt" });
+  assert.equal(layer.length, 1);
+  consent = "rejected";
+  track("click_whatsapp", { service: "pkrt" });
+  assert.equal(layer.length, 1);
   Object.defineProperty(globalThis, "localStorage", {
     configurable: true,
     value: {

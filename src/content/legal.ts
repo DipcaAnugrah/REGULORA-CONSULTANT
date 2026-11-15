@@ -14,7 +14,7 @@ export const legal = {
       ],
       [
         "Analitik dan pengukuran iklan",
-        "Google Analytics atau Google Ads hanya dimuat ketika dikonfigurasi dan Anda memilih Izinkan. Preferensi disimpan di browser. Peristiwa yang diukur meliputi kunjungan halaman, pembukaan layanan, awal pengisian formulir, klik WhatsApp. Nama, kontak, isi konsultasi, dan parameter URL tidak dikirim sebagai parameter event analitik. Penyedia tracking dapat memproses informasi perangkat dan jaringan sesuai kebijakannya.",
+        "Situs memakai Google Tag Manager dengan mode persetujuan (Consent Mode). Sebelum Anda memilih Izinkan, cookie analitik dan iklan tidak disimpan; Google hanya menerima sinyal tanpa cookie untuk mengukur kunjungan dan konversi secara agregat. Jika Anda memilih Tolak, alat pengukuran tidak dimuat. Preferensi disimpan di browser dan dapat diubah melalui tombol Preferensi cookie. Peristiwa yang diukur meliputi kunjungan halaman, pembukaan layanan, awal pengisian formulir, klik WhatsApp. Nama, kontak, isi konsultasi, dan parameter URL tidak dikirim sebagai parameter event analitik. Penyedia tracking dapat memproses informasi perangkat dan jaringan sesuai kebijakannya.",
       ],
       [
         "WhatsApp dan pihak ketiga",

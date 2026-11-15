@@ -2,7 +2,7 @@ declare global {
   interface Window {
     dataLayer: unknown[];
     gtag?: (...args: unknown[]) => void;
-    /** Set when the Google Tag Manager container is loaded. */
+    /** Set when the Google Tag Manager container is queued (Consent Mode). */
     reguloraGtm?: boolean;
   }
 }
@@ -17,10 +17,12 @@ const allowed: Record<string, string[]> = {
 /** Analytics must never break a successful lead submission. No contact fields are accepted. */
 export function track(name: string, data: Record<string, string> = {}) {
   try {
-    if (
-      !allowed[name] ||
-      localStorage.getItem("regulora-consent") !== "accepted"
-    )
+    if (!allowed[name]) return;
+    const consent = localStorage.getItem("regulora-consent");
+    // GTM runs in Consent Mode: until the visitor accepts, Google tags send
+    // cookieless pings only. An explicit "Tolak" stops measurement entirely.
+    // Without GTM, gtag.js sets cookies, so it still needs an explicit yes.
+    if (window.reguloraGtm ? consent === "rejected" : consent !== "accepted")
       return;
     const safe = Object.fromEntries(
       Object.entries(data).filter(([key]) => allowed[name].includes(key)),
