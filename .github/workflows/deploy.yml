@@ -17,7 +17,7 @@ jobs:
     env:
       NEXT_PUBLIC_SITE_URL: https://regulora-consultant.com
       NEXT_PUBLIC_LAUNCH_READY: "true"
-      NEXT_PUBLIC_GTM_ID: GTM-MB6442QH
+      NEXT_PUBLIC_GTM_ID: GTM-TDV6PL4B
       NEXT_TELEMETRY_DISABLED: "1"
     steps:
       - uses: actions/checkout@v4

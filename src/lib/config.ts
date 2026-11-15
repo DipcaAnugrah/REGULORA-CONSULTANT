@@ -15,7 +15,7 @@ export const businessPhone =
   process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "081949387620";
 export const businessEmail =
   process.env.NEXT_PUBLIC_BUSINESS_EMAIL || "reguloraconsultant@gmail.com";
-const gtm = process.env.NEXT_PUBLIC_GTM_ID || "GTM-MB6442QH";
+const gtm = process.env.NEXT_PUBLIC_GTM_ID || "GTM-TDV6PL4B";
 /** Google Tag Manager container. When set, GA4/Ads tags are managed inside GTM. */
 export const gtmId = /^GTM-[A-Z0-9]{4,12}$/.test(gtm) ? gtm : null;
 export function whatsappUrl(message: string) {
