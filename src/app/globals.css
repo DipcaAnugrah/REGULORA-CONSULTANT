@@ -1485,6 +1485,156 @@ footer {
     grid-column: auto;
   }
 }
+/* ---------- Motion ----------
+   Only transform/opacity are animated (GPU-composited, no layout work).
+   Hero text starts at 0.01 opacity, not 0, so it still counts for LCP
+   on first paint. Everything is switched off by prefers-reduced-motion. */
+@keyframes rise {
+  from {
+    opacity: 0.01;
+    transform: translateY(16px);
+  }
+}
+@keyframes settle {
+  from {
+    transform: scale(1.06);
+  }
+}
+@keyframes spin-slow {
+  to {
+    rotate: 360deg;
+  }
+}
+@keyframes float {
+  50% {
+    translate: 0 -8px;
+  }
+}
+@keyframes ping {
+  from {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  to {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+@keyframes underline {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes nudge {
+  0%,
+  86%,
+  100% {
+    transform: none;
+  }
+  90% {
+    transform: translateY(-5px);
+  }
+  94% {
+    transform: translateY(0);
+  }
+  97% {
+    transform: translateY(-2px);
+  }
+}
+.hero-copy > *,
+.page-hero .container > * {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+.hero-copy > :nth-child(2),
+.page-hero .container > :nth-child(2) {
+  animation-delay: 0.08s;
+}
+.hero-copy > :nth-child(3),
+.page-hero .container > :nth-child(3) {
+  animation-delay: 0.16s;
+}
+.hero-copy > :nth-child(4),
+.page-hero .container > :nth-child(4) {
+  animation-delay: 0.24s;
+}
+.hero-copy > :nth-child(n + 5),
+.page-hero .container > :nth-child(n + 5) {
+  animation-delay: 0.32s;
+}
+.hero-photo img {
+  animation: settle 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+.highlight:after {
+  transform-origin: left;
+  animation: underline 0.7s 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+.hero-flower,
+.cta-decoration {
+  animation: spin-slow 40s linear infinite;
+}
+.photo-caption {
+  animation: float 6s ease-in-out 1s infinite;
+}
+.status-dot {
+  position: relative;
+}
+.status-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--green);
+  animation: ping 1.8s ease-out infinite;
+}
+.floating-whatsapp {
+  animation: nudge 7s ease-in-out 3s infinite;
+}
+.floating-whatsapp:hover {
+  animation-play-state: paused;
+}
+/* Cards: lift + icon nudge on hover */
+.icon-box,
+.card-link svg,
+.text-link svg,
+.feature svg {
+  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.service-card:hover .icon-box {
+  transform: rotate(-6deg) scale(1.08);
+}
+.service-card:hover .card-link svg,
+.text-link:hover svg,
+.article-card:hover .text-link {
+  transform: translate(3px, -3px);
+}
+.feature:hover svg {
+  transform: translateY(-3px);
+}
+.article-card {
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s;
+}
+.article-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px #17233d09;
+  border-color: #b5c6e5;
+}
+/* Scroll reveal. The attribute is added by script only for elements that
+   start below the fold, so nothing is ever hidden without JavaScript. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.65s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(var(--reveal-i, 0) * 80ms);
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1494,5 +1644,9 @@ footer {
   *::after {
     transition: none !important;
     animation: none !important;
+  }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
   }
 }

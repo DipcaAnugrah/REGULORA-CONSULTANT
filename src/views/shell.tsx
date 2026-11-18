@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Header, Footer } from "@/components/ui";
-import { Analytics, WhatsApp } from "@/components/client";
+import { Analytics, ScrollReveal, WhatsApp } from "@/components/client";
 import { siteUrl, launchReady, whatsappNumber } from "@/lib/config";
 import { getDict, htmlLang, type Locale } from "@/i18n";
 const font = Plus_Jakarta_Sans({
@@ -46,6 +46,7 @@ export function RootShell({
           </div>
         )}
         <Analytics />
+        <ScrollReveal />
         {process.env.NODE_ENV === "development" && !whatsappNumber && (
           <div className="dev-notice">{t.site.devNotice}</div>
         )}

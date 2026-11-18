@@ -349,3 +349,54 @@ export function Analytics() {
     </>
   );
 }
+// Sections that fade up as they scroll into view.
+const REVEAL =
+  ".section-heading, .service-card, .feature, .workflow li, .faq-list details, .about-statement, .about-copy, .cta-section, .article-card, .info-panel, .form, .prose > section";
+/** Fade-up on scroll. Only elements that start below the fold are marked,
+ *  so nothing visible on load is hidden, and without JS nothing is hidden. */
+export function ScrollReveal() {
+  const path = usePathname();
+  useEffect(() => {
+    if (
+      !("IntersectionObserver" in window) ||
+      matchMedia("(prefers-reduced-motion: reduce)").matches
+    )
+      return;
+    const timers: number[] = [];
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const el = entry.target as HTMLElement;
+          io.unobserve(el);
+          el.classList.add("is-visible");
+          // Hand the element back to its own hover transitions afterwards.
+          timers.push(
+            window.setTimeout(() => {
+              el.removeAttribute("data-reveal");
+              el.classList.remove("is-visible");
+              el.style.removeProperty("--reveal-i");
+            }, 1200),
+          );
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+    );
+    const perParent = new Map<Element, number>();
+    document.querySelectorAll<HTMLElement>(REVEAL).forEach((el) => {
+      if (el.hasAttribute("data-reveal") || el.closest("[data-reveal]")) return;
+      if (el.getBoundingClientRect().top < window.innerHeight) return;
+      const parent = el.parentElement;
+      const i = parent ? (perParent.get(parent) ?? 0) : 0;
+      if (parent) perParent.set(parent, i + 1);
+      el.style.setProperty("--reveal-i", String(Math.min(i, 5)));
+      el.setAttribute("data-reveal", "");
+      io.observe(el);
+    });
+    return () => {
+      io.disconnect();
+      timers.forEach(clearTimeout);
+    };
+  }, [path]);
+  return null;
+}
