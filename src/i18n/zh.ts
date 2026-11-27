@@ -33,8 +33,7 @@ const zh: Dict = {
     button: "通过 WhatsApp 咨询",
     fallback: "立即咨询",
     floating: "WhatsApp 联系",
-    pageLine: "页面",
-    campaignLine: "推广活动",
+    refLine: "来源",
   },
   cookie: {
     label: "分析偏好",
@@ -500,7 +499,7 @@ const zh: Dict = {
           ],
           [
             "WhatsApp 及第三方",
-            "WhatsApp 链接会打开第三方服务。消息可能包含来源页面及有效的推广活动代码。您在 WhatsApp 中发送的信息将根据该服务的政策进行处理。",
+            "WhatsApp 链接会打开第三方服务。消息可能包含简短的来源代码（如您通过广告访问）。您在 WhatsApp 中发送的信息将根据该服务的政策进行处理。",
           ],
           [
             "您的选择与请求",

@@ -33,8 +33,7 @@ const en: Dict = {
     button: "Consult via WhatsApp",
     fallback: "Consult now",
     floating: "WhatsApp Chat",
-    pageLine: "Page",
-    campaignLine: "Campaign",
+    refLine: "Ref",
   },
   cookie: {
     label: "Analytics preferences",
@@ -566,7 +565,7 @@ const en: Dict = {
           ],
           [
             "WhatsApp and third parties",
-            "WhatsApp links open a third-party service. Messages may include the originating page and a valid campaign code. Information you send on WhatsApp is processed in accordance with that service's policies.",
+            "WhatsApp links open a third-party service. Messages may include a short reference code if you arrived from an ad. Information you send on WhatsApp is processed in accordance with that service's policies.",
           ],
           [
             "Your choices and requests",

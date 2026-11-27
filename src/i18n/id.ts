@@ -34,8 +34,7 @@ const id = {
     button: "Konsultasi via WhatsApp",
     fallback: "Konsultasi sekarang",
     floating: "Chat WhatsApp",
-    pageLine: "Halaman",
-    campaignLine: "Kampanye",
+    refLine: "Ref",
   },
   cookie: {
     label: "Preferensi analitik",
@@ -566,7 +565,7 @@ const id = {
           ],
           [
             "WhatsApp dan pihak ketiga",
-            "Tautan WhatsApp membuka layanan pihak ketiga. Pesan dapat menyertakan halaman asal dan kode kampanye yang valid. Informasi yang Anda kirim di WhatsApp diproses sesuai kebijakan layanan tersebut.",
+            "Tautan WhatsApp membuka layanan pihak ketiga. Pesan dapat menyertakan kode referensi singkat jika Anda datang dari iklan. Informasi yang Anda kirim di WhatsApp diproses sesuai kebijakan layanan tersebut.",
           ],
           [
             "Pilihan dan permintaan Anda",

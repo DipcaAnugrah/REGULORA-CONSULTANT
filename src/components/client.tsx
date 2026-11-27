@@ -22,6 +22,28 @@ export { track } from '@/lib/analytics';
 export function useLocale() {
   return localeFromPath(usePathname());
 }
+/** Short, human-readable source for chats that came from an ad, e.g.
+ *  "Google Ads – PIRT". Organic visitors get no reference line at all. */
+export function adReference(query: URLSearchParams) {
+  const clean = (v: string | null) =>
+    v && /^[a-zA-Z0-9_.-]{1,100}$/.test(v) ? v : "";
+  const source = clean(query.get("utm_source"));
+  const medium = clean(query.get("utm_medium"));
+  const campaign = clean(query.get("utm_campaign"));
+  const paid = /^(cpc|ppc|paid)/i.test(medium) || query.has("gclid");
+  if (!source && !paid) return "";
+  const channel =
+    source.toLowerCase() === "google" || (!source && query.has("gclid"))
+      ? paid
+        ? "Google Ads"
+        : "Google"
+      : source.charAt(0).toUpperCase() + source.slice(1);
+  const name = campaign
+    .replace(/^search[-_]/i, "")
+    .replace(/[-_]+/g, " ")
+    .toUpperCase();
+  return name ? `${channel} – ${name}` : channel;
+}
 export function WhatsApp({
   service,
   label,
@@ -45,18 +67,8 @@ export function WhatsApp({
       onClick={(e) => {
         if (!href) return;
         const url = new URL(href);
-        const query = new URLSearchParams(location.search);
-        const campaign = ["utm_source", "utm_medium", "utm_campaign"]
-          .map((k) => {
-            const v = query.get(k);
-            return v && /^[a-zA-Z0-9_.-]{1,100}$/.test(v) ? `${k}: ${v}` : "";
-          })
-          .filter(Boolean)
-          .join(", ");
-        url.searchParams.set(
-          "text",
-          `${message}\n${t.pageLine}: ${location.pathname}${campaign ? `\n${t.campaignLine}: ${campaign}` : ""}`,
-        );
+        const ref = adReference(new URLSearchParams(location.search));
+        url.searchParams.set("text", ref ? `${message}\n(${t.refLine}: ${ref})` : message);
         e.currentTarget.href = url.toString();
         track("click_whatsapp", { service: service || "general" });
       }}
