@@ -142,7 +142,7 @@ export function ServicePage({ lang, slug }: { lang: Locale; slug: string }) {
             ]}
           />
           <span className="eyebrow">{s.category}</span>
-          <h1>{t.title(s.name)}</h1>
+          <h1>{s.h1}</h1>
           <p>
             {s.summary} {t.introSuffix}
           </p>
@@ -179,6 +179,16 @@ export function ServicePage({ lang, slug }: { lang: Locale; slug: string }) {
             <p>{t.prepNote}</p>
           </aside>
         </div>
+        {s.sections.length > 0 && (
+          <div className="prose service-more">
+            {s.sections.map(([h, body]) => (
+              <section key={h}>
+                <h2>{h}</h2>
+                <p>{body}</p>
+              </section>
+            ))}
+          </div>
+        )}
         <div className="prose">
           <h2>{t.stepsTitle}</h2>
         </div>
@@ -186,6 +196,25 @@ export function ServicePage({ lang, slug }: { lang: Locale; slug: string }) {
         <div className="section">
           <h2 style={{ marginBottom: 25 }}>{t.faqTitle(s.short)}</h2>
           <FAQ lang={lang} items={s.faq} />
+        </div>
+        <div className="related-services">
+          <h2>{t.relatedTitle}</h2>
+          <div className="related-grid">
+            {s.related.map((r) => {
+              const other = getServices(lang).find((x) => x.slug === r);
+              return other ? (
+                <Link
+                  key={r}
+                  href={localePath(lang, `/layanan/${r}`)}
+                  className="related-card"
+                >
+                  <span className="eyebrow">{other.category}</span>
+                  <strong>{other.name}</strong>
+                  <span className="text-link">{d.common.exploreService} ↗</span>
+                </Link>
+              ) : null;
+            })}
+          </div>
         </div>
         <p className="notice">{t.notice}</p>
       </section>

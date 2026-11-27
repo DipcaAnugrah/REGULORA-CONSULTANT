@@ -351,7 +351,7 @@ export function Analytics() {
 }
 // Sections that fade up as they scroll into view.
 const REVEAL =
-  ".section-heading, .service-card, .feature, .workflow li, .faq-list details, .about-statement, .about-copy, .cta-section, .article-card, .info-panel, .form, .prose > section";
+  ".section-heading, .service-card, .feature, .workflow li, .faq-list details, .about-statement, .about-copy, .cta-section, .article-card, .info-panel, .form, .prose > section, .related-card";
 /** Fade-up on scroll. Only elements that start below the fold are marked,
  *  so nothing visible on load is hidden, and without JS nothing is hidden. */
 export function ScrollReveal() {

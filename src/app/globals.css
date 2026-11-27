@@ -1485,6 +1485,50 @@ footer {
     grid-column: auto;
   }
 }
+/* Service page: extra content + related services */
+.service-more {
+  margin-block: 10px 50px;
+  max-width: 760px;
+}
+.service-more section + section {
+  margin-top: 28px;
+}
+.related-services {
+  margin-block: 10px 40px;
+}
+.related-services h2 {
+  margin-bottom: 20px;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+.related-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s;
+}
+.related-card strong {
+  font-size: 17px;
+  color: var(--navy);
+}
+.related-card .eyebrow {
+  margin-bottom: 0;
+}
+.related-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px #17233d09;
+  border-color: #b5c6e5;
+}
 /* ---------- Motion ----------
    Only transform/opacity are animated (GPU-composited, no layout work).
    Hero text starts at 0.01 opacity, not 0, so it still counts for LCP

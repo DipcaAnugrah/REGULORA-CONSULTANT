@@ -19,9 +19,12 @@ export function getServices(locale: Locale = "id") {
       requirements: [] as string[],
       preparation: s.topics,
       steps: t.serviceDetail.steps(s.short, s.topics[0]),
-      faq: [[s.question, s.answer], t.content.generalFaq[1], t.content.generalFaq[2]],
-      seoTitle: t.serviceDetail.seoTitle(s.name),
-      metaDescription: s.summary,
+      faq: [
+        [s.question, s.answer],
+        ...s.faq,
+        t.content.generalFaq[1],
+        t.content.generalFaq[2],
+      ],
       whatsappMessage: t.whatsapp.serviceMessage(s.name),
       needsVerification: true,
     };

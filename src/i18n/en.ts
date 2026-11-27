@@ -77,13 +77,13 @@ const en: Dict = {
     ctaButton: "Contact our consultants",
   },
   home: {
-    metaTitle: "Product & Business Licensing Consulting in Indonesia",
+    metaTitle: "BPOM, PIRT & Medical Device Licensing in Indonesia | REGULORA CONSULTANT",
     metaDescription:
-      "Clear, focused licensing support for medical devices, PKRT, food, and cosmetics in Indonesia.",
+      "REGULORA CONSULTANT: BPOM cosmetic, BPOM MD/ML, PIRT, medical device and PKRT licensing services in Indonesia. Initial consultation via WhatsApp.",
     schemaDescription:
       "Consulting and licensing support for medical devices, PKRT, food, and cosmetics in Indonesia.",
     offerCatalog: "Licensing Services",
-    eyebrow: "YOUR BUSINESS LICENSING PARTNER",
+    eyebrow: "BPOM, PIRT & MEDICAL DEVICE LICENSING",
     titleA: "Surer steps.",
     titleB: "A business",
     titleHighlight: "better prepared.",
@@ -179,8 +179,7 @@ const en: Dict = {
       "Choose a service to see its focus. Not sure yet? We will help map your needs during the consultation.",
   },
   serviceDetail: {
-    seoTitle: (name: string) => `${name} Services in Indonesia`,
-    title: (name: string) => `${name} Services in Indonesia`,
+    relatedTitle: "Related services",
     introSuffix:
       "Start with a needs review so your next steps are more focused.",
     consult: (short: string) => `Consult on ${short}`,
@@ -353,6 +352,13 @@ const en: Dict = {
         question: "Are all household products classified as PKRT?",
         answer:
           "Classification needs to be reviewed based on the product's function, claims, and characteristics. A trade name alone is not enough to determine its licensing pathway.",
+        seoTitle: "PKRT Registration Service Indonesia",
+        h1: "PKRT Marketing Authorization Service in Indonesia",
+        metaDescription:
+          "PKRT (household health supplies) marketing authorization for manufacturers, brands, and importers: category, claim, and label checks. Consult via WhatsApp.",
+        sections: [["What is PKRT?", "PKRT (Perbekalan Kesehatan Rumah Tangga, or household health supplies) covers products such as cleaners, antiseptics, air fresheners, and wet wipes, whose marketing authorization is issued by the Ministry of Health. The right category is determined by the product's function and claims."], ["PKRT risk classes", "PKRT products are also grouped by risk, which affects the documents and testing required. Claims on the label need to match the product category to avoid corrections during evaluation."]],
+        faq: [] as string[][],
+        related: ["izin-edar-alat-kesehatan", "notifikasi-kosmetik"],
       },
       "idak-ipak": {
         name: "IDAK / IPAK Distribution Licensing",
@@ -373,6 +379,13 @@ const en: Dict = {
           "Is a distribution license the same as a product marketing authorization?",
         answer:
           "Licensing requirements for distribution activities and for products need to be reviewed separately. A consultation helps map both according to your business activities.",
+        seoTitle: "IDAK / IPAK Licensing Service",
+        h1: "Medical Device Distribution Licensing Service (IDAK / IPAK)",
+        metaDescription:
+          "Medical device distribution licensing support (IDAK/IPAK): business activity, facilities, technical responsible person, and CDAKB. Consult via WhatsApp.",
+        sections: [["IDAK and IPAK", "IPAK (Izin Penyalur Alat Kesehatan, or medical device distributor license) is the long-established term for medical device distributor licensing. Under the risk-based business licensing system, the terms and pathways may differ, so they need to be checked against your business activities."], ["Preparing for distribution", "Preparation generally covers the business entity and business licensing, storage facilities, a technical responsible person, and implementation of good distribution practice for medical devices (CDAKB)."]],
+        faq: [] as string[][],
+        related: ["izin-edar-alat-kesehatan", "pkrt"],
       },
       "izin-edar-alat-kesehatan": {
         name: "Medical Device Marketing Authorization",
@@ -392,6 +405,13 @@ const en: Dict = {
         question: "Does every device have the same document requirements?",
         answer:
           "No. Product characteristics, intended use, and category can affect the document requirements. The final list is determined after the review.",
+        seoTitle: "Medical Device Registration Indonesia",
+        h1: "Medical Device Marketing Authorization Service (AKD/AKL)",
+        metaDescription:
+          "AKD/AKL medical device marketing authorization for manufacturers, distributors, and importers: risk class and technical file checks. Consult via WhatsApp.",
+        sections: [["What is a medical device marketing authorization?", "A medical device marketing authorization, namely AKD for locally made products and AKL for imported products, is issued by the Ministry of Health before a medical device can be distributed in Indonesia. Document requirements depend heavily on the device's risk class."], ["Risk classification", "Medical devices are grouped by their level of risk. The higher the class, the more detailed the technical documents and evaluation required. Determining the correct class is an important first step before preparing documents."]],
+        faq: [] as string[][],
+        related: ["idak-ipak", "pkrt"],
       },
       "spp-irt": {
         name: "SPP-IRT Home-Industry Food Permit",
@@ -411,6 +431,13 @@ const en: Dict = {
         question: "Can all food products use SPP-IRT?",
         answer:
           "No. The food type and production process affect which pathway is suitable. Your product needs to be reviewed before choosing SPP-IRT or another pathway.",
+        seoTitle: "PIRT (SPP-IRT) Permit Service",
+        h1: "PIRT (SPP-IRT) Permit Service for Home-Based Food Businesses",
+        metaDescription:
+          "PIRT (SPP-IRT) permit service for home-based food businesses: food type check, document preparation, and application via OSS. Consult via WhatsApp.",
+        sections: [["What is PIRT (SPP-IRT)?", "SPP-IRT, more commonly called PIRT, is the Home-Industry Food Production Certificate (Sertifikat Produksi Pangan Industri Rumah Tangga). It is the basis for household-scale food businesses to distribute certain processed foods, with a P-IRT number printed on the label. It is issued by the regency/city government through the business licensing system (OSS)."], ["Which products can use PIRT?", "PIRT is intended for relatively low-risk processed foods produced at household scale, such as cookies, chips, crackers, or powdered drinks. The list of permitted food types is set by regulation and may change. Certain products generally cannot use PIRT, for example foods that must be stored frozen or chilled, milk and dairy products, baby food, and sterile canned food. Products like these usually need to go through the BPOM MD pathway."], ["What is generally needed", "Before applying, businesses usually need to prepare a Business Identification Number (NIB), product and composition information, and a label design, and attend food safety training. Production facilities may also be inspected to assess the application of good food production practices. The exact list depends on the product type and local regulations."], ["Common mistakes", "Some common issues: choosing PIRT for a product that should go through BPOM MD, labels missing mandatory information, exaggerated claims on packaging, or OSS data that does not match the business activity. An early review helps avoid having to reapply."], ["PIRT or BPOM MD?", "PIRT suits household-scale production and certain food types. If the product is a higher-risk food, is produced at industrial scale, or will be marketed more widely, for example to modern retail chains that require a BPOM license, the BPOM MD pathway may be an option. We help assess the most suitable pathway for your product."]],
+        faq: [["How long does the PIRT process take?", "The timing depends on document readiness, the training schedule, and facility inspection in your area. We help prepare your data from the start so the process is not delayed by missing documents."], ["Can PIRT be handled online?", "Applications are submitted through the OSS system, while training and facility inspection follow the rules of the local office. Consultation with us can be done entirely online."]] as string[][],
+        related: ["bpom-md-ml", "notifikasi-kosmetik"],
       },
       "notifikasi-kosmetik": {
         name: "BPOM Cosmetic Notification",
@@ -430,6 +457,13 @@ const en: Dict = {
         question: "Can brands that use contract manufacturing consult?",
         answer:
           "Yes. Explain your relationship with the manufacturer and the documents already available so the applicant and product requirements can be mapped.",
+        seoTitle: "BPOM Cosmetic Notification Service",
+        h1: "BPOM Cosmetic Registration: Cosmetic Notification Support",
+        metaDescription:
+          "BPOM cosmetic notification for skincare brands, contract manufacturing, and importers: formula, claim, and label checks. Initial consultation via WhatsApp.",
+        sections: [["What is BPOM cosmetic notification?", "Cosmetic notification is a mandatory notice to BPOM (Indonesia's food and drug authority) before a cosmetic product is distributed in Indonesia. Products whose notification is approved receive a notification number that is printed on the label. Without this number, a product cannot be legally distributed, including through online marketplaces."], ["Who can apply?", "The notification applicant is a registered business entity, for example a cosmetic manufacturer, an importer, or a brand owner working with a cosmetic manufacturer under a contract manufacturing (maklon) arrangement. Contract-manufactured brand owners need to understand how roles and documents are divided with the factory before applying."], ["Information and documents usually prepared", "Preparation generally includes business entity data, the formula or ingredient composition, manufacturer information, a label design, and the product information file (DIP, Dokumen Informasi Produk) kept by the applicant. Ingredients used must comply with the applicable cosmetic ingredient regulations."], ["Claims and labels to watch", "Cosmetic claims must not lead to drug claims, such as curing acne or treating skin diseases. Unsuitable claims are one of the common reasons a notification needs to be corrected. The label also needs to include mandatory information in Indonesian."], ["After the notification number is issued", "A notification has a validity period and needs to be renewed before it expires. Changes to the formula, size, or product name may also require a new notification or a data change. We help map these needs from the start."]],
+        faq: [["Can contract-manufactured skincare be registered under my brand?", "Yes, as long as the applicant meets the requirements and has a clear agreement with the cosmetic manufacturer. We help map the documents that need to be prepared together with the factory."], ["What about imported cosmetics?", "Imported cosmetics are notified by a registered importer. Documents from the manufacturer in the country of origin are usually needed, such as a letter of appointment and formula information."]] as string[][],
+        related: ["bpom-md-ml", "pkrt"],
       },
       "bpom-md-ml": {
         name: "BPOM MD / ML Food Registration",
@@ -449,6 +483,13 @@ const en: Dict = {
         question: "What is the difference between MD and ML?",
         answer:
           "MD relates to processed food produced in Indonesia, while ML relates to imported processed food. The suitability of the pathway and requirements still needs to be reviewed for your product.",
+        seoTitle: "BPOM MD/ML Food Registration",
+        h1: "BPOM MD / ML Registration for Food and Beverages",
+        metaDescription:
+          "BPOM MD/ML registration for local and imported food and beverages: registration pathway, documents, lab testing, and labels. Consult via WhatsApp.",
+        sections: [["What are BPOM MD and ML?", "A BPOM MD marketing authorization number is given to processed food produced in Indonesia, while ML is for imported processed food. The number is printed on the label and shows that the product has gone through BPOM's assessment of safety, quality, and labeling."], ["When does a product need BPOM MD?", "Generally when food is produced at industrial scale, including food types that cannot use PIRT such as frozen food, milk and dairy products, or certain beverages, or when the product will be marketed widely. Brand owners who use another party's production services may also take this pathway, subject to the regulations."], ["Registration preparation", "Preparation generally includes business licensing and production facility data, composition and production process, product laboratory test results, and a label design that complies with the regulations. For MD, the production facility needs to apply good manufacturing practice for processed food (CPPOB). For ML, the importer prepares documents from the manufacturer in the country of origin."], ["Processed food labels", "The label must include information such as the product name, composition, net weight, name and address of the manufacturer or importer, expiry date, and marketing authorization number. Label non-compliance is often a reason for corrections during evaluation."], ["From PIRT to BPOM MD", "Businesses that grow beyond household scale often need to move from PIRT to BPOM MD. We help map what needs to be prepared, from production facilities to labels, so the transition is more focused."]],
+        faq: [["How long does BPOM MD registration take?", "The duration depends on the product's risk category, document completeness, and BPOM's evaluation results. We do not promise a specific duration, but we help make sure your documents are complete from the start."], ["Is laboratory testing required?", "Generally, yes. Test parameters are determined by the food type. We help map the relevant parameters before you carry out testing."]] as string[][],
+        related: ["spp-irt", "notifikasi-kosmetik"],
       },
     },
     articles: {

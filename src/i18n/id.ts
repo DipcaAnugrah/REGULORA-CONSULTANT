@@ -78,13 +78,13 @@ const id = {
     ctaButton: "Hubungi konsultan kami",
   },
   home: {
-    metaTitle: "Konsultasi Perizinan Produk & Usaha",
+    metaTitle: "Jasa Perizinan BPOM, PIRT & Alkes | REGULORA CONSULTANT",
     metaDescription:
-      "Pendampingan perizinan alat kesehatan, PKRT, pangan, dan kosmetik yang jelas dan terarah.",
+      "REGULORA CONSULTANT: jasa konsultasi perizinan BPOM kosmetik, BPOM MD/ML, PIRT, izin edar alat kesehatan, dan PKRT. Konsultasi awal via WhatsApp.",
     schemaDescription:
       "Konsultasi dan pendampingan perizinan alat kesehatan, PKRT, pangan, dan kosmetik.",
     offerCatalog: "Layanan Perizinan",
-    eyebrow: "PARTNER PERIZINAN USAHA ANDA",
+    eyebrow: "JASA PERIZINAN BPOM, PIRT & ALKES",
     titleA: "Langkah lebih pasti.",
     titleB: "Usaha",
     titleHighlight: "lebih siap.",
@@ -180,8 +180,7 @@ const id = {
       "Pilih layanan untuk mengenali fokus pendampingan. Belum yakin? Kami bantu memetakan kebutuhan Anda saat konsultasi.",
   },
   serviceDetail: {
-    seoTitle: (name: string) => `Jasa Pengurusan ${name}`,
-    title: (name: string) => `Jasa Pengurusan ${name}`,
+    relatedTitle: "Layanan terkait",
     introSuffix:
       "Mulai dengan peninjauan kebutuhan agar langkah berikutnya lebih terarah.",
     consult: (short: string) => `Konsultasikan ${short}`,
@@ -354,6 +353,13 @@ const id = {
         question: "Apakah semua produk rumah tangga termasuk PKRT?",
         answer:
           "Kategorisasi perlu ditinjau dari fungsi, klaim, dan karakteristik produk. Nama dagang saja tidak cukup untuk menentukan jalur perizinannya.",
+        seoTitle: "Jasa Izin Edar PKRT",
+        h1: "Jasa Pengurusan Izin Edar PKRT",
+        metaDescription:
+          "Jasa izin edar PKRT (Perbekalan Kesehatan Rumah Tangga) untuk produsen, brand, dan importir: cek kategori, klaim, dan label. Konsultasi via WhatsApp.",
+        sections: [["Apa itu PKRT?", "PKRT atau Perbekalan Kesehatan Rumah Tangga mencakup produk seperti pembersih, antiseptik, pewangi ruangan, dan tisu basah yang izin edarnya diterbitkan oleh Kementerian Kesehatan. Kategori yang tepat ditentukan dari fungsi dan klaim produk."], ["Kelas risiko PKRT", "Produk PKRT juga dikelompokkan berdasarkan risiko, yang memengaruhi dokumen dan pengujian yang dibutuhkan. Klaim pada label perlu sesuai dengan kategori produk agar tidak menimbulkan perbaikan saat evaluasi."]],
+        faq: [] as string[][],
+        related: ["izin-edar-alat-kesehatan", "notifikasi-kosmetik"],
       },
       "idak-ipak": {
         name: "IDAK / IPAK",
@@ -373,6 +379,13 @@ const id = {
         question: "Apakah izin distribusi sama dengan izin edar produk?",
         answer:
           "Kebutuhan perizinan kegiatan distribusi dan produk perlu ditinjau terpisah. Konsultasi membantu memetakan keduanya sesuai kegiatan usaha.",
+        seoTitle: "Jasa Pengurusan IDAK / IPAK",
+        h1: "Jasa Pengurusan Izin Distribusi Alat Kesehatan (IDAK / IPAK)",
+        metaDescription:
+          "Pendampingan perizinan distribusi alat kesehatan (IDAK/IPAK): cek kegiatan usaha, sarana, penanggung jawab teknis, dan CDAKB. Konsultasi via WhatsApp.",
+        sections: [["IDAK dan IPAK", "IPAK (Izin Penyalur Alat Kesehatan) adalah istilah yang lama dikenal untuk perizinan distributor alat kesehatan. Dalam sistem perizinan berusaha berbasis risiko, istilah dan jalurnya dapat berbeda, sehingga perlu dicek sesuai kegiatan usaha Anda."], ["Persiapan distribusi", "Persiapan umumnya meliputi badan usaha dan perizinan berusaha, sarana penyimpanan, penanggung jawab teknis, serta penerapan cara distribusi alat kesehatan yang baik (CDAKB)."]],
+        faq: [] as string[][],
+        related: ["izin-edar-alat-kesehatan", "pkrt"],
       },
       "izin-edar-alat-kesehatan": {
         name: "Izin Edar Alat Kesehatan",
@@ -392,6 +405,13 @@ const id = {
         question: "Apakah setiap alat memiliki kebutuhan dokumen yang sama?",
         answer:
           "Tidak. Karakteristik, tujuan penggunaan, dan kategori produk dapat memengaruhi kebutuhan dokumen. Daftar final ditetapkan setelah peninjauan.",
+        seoTitle: "Jasa Izin Edar Alat Kesehatan",
+        h1: "Jasa Pengurusan Izin Edar Alat Kesehatan (AKD/AKL)",
+        metaDescription:
+          "Jasa izin edar alat kesehatan AKD dan AKL untuk produsen, distributor, dan importir: cek kelas risiko dan dokumen teknis. Konsultasi via WhatsApp.",
+        sections: [["Apa itu izin edar alat kesehatan?", "Izin edar alat kesehatan, yaitu AKD untuk produk dalam negeri dan AKL untuk produk impor, diterbitkan oleh Kementerian Kesehatan sebelum alat kesehatan dapat diedarkan di Indonesia. Kebutuhan dokumen sangat dipengaruhi oleh kelas risiko alat."], ["Klasifikasi risiko", "Alat kesehatan dikelompokkan berdasarkan tingkat risikonya. Semakin tinggi kelasnya, semakin rinci dokumen teknis dan evaluasi yang dibutuhkan. Penentuan kelas yang tepat adalah langkah awal yang penting sebelum menyusun dokumen."]],
+        faq: [] as string[][],
+        related: ["idak-ipak", "pkrt"],
       },
       "spp-irt": {
         name: "SPP-IRT",
@@ -411,6 +431,13 @@ const id = {
         question: "Apakah semua pangan bisa menggunakan SPP-IRT?",
         answer:
           "Tidak. Jenis pangan dan proses produksi memengaruhi jalur yang sesuai. Produk Anda perlu ditinjau sebelum memilih SPP-IRT atau jalur lainnya.",
+        seoTitle: "Jasa Pengurusan PIRT (SPP-IRT)",
+        h1: "Jasa Pengurusan PIRT (SPP-IRT) untuk Usaha Pangan Rumahan",
+        metaDescription:
+          "Jasa pengurusan PIRT (SPP-IRT) untuk usaha pangan rumahan: cek jenis pangan, persiapan dokumen, hingga pengajuan lewat OSS. Konsultasi via WhatsApp.",
+        sections: [["Apa itu PIRT (SPP-IRT)?", "SPP-IRT, yang lebih sering disebut PIRT, adalah Sertifikat Produksi Pangan Industri Rumah Tangga. Sertifikat ini menjadi dasar bagi usaha pangan skala rumah tangga untuk mengedarkan pangan olahan tertentu, dengan nomor P-IRT yang dicantumkan pada label. Penerbitannya dilakukan oleh pemerintah kabupaten/kota melalui sistem perizinan berusaha (OSS)."], ["Produk apa saja yang bisa memakai PIRT?", "PIRT ditujukan untuk pangan olahan dengan risiko relatif rendah yang diproduksi di skala rumah tangga, misalnya kue kering, keripik, kerupuk, atau minuman serbuk. Daftar jenis pangan yang diperbolehkan ditetapkan oleh regulasi dan dapat berubah. Produk tertentu umumnya tidak dapat memakai PIRT, misalnya pangan yang harus disimpan beku atau dingin, susu dan olahannya, pangan untuk bayi, serta pangan dalam kaleng steril. Produk seperti ini biasanya perlu menempuh jalur BPOM MD."], ["Persiapan yang umumnya dibutuhkan", "Sebelum pengajuan, pelaku usaha biasanya perlu menyiapkan Nomor Induk Berusaha (NIB), informasi produk dan komposisi, rancangan label, serta mengikuti penyuluhan keamanan pangan. Sarana produksi juga dapat diperiksa untuk menilai penerapan cara produksi pangan yang baik. Daftar pastinya mengikuti jenis produk dan ketentuan daerah setempat."], ["Kesalahan yang sering terjadi", "Beberapa kendala yang sering muncul: memilih PIRT untuk produk yang seharusnya melalui BPOM MD, label belum memuat informasi wajib, klaim berlebihan pada kemasan, atau data di OSS tidak sesuai dengan kegiatan usaha. Peninjauan sejak awal membantu menghindari pengajuan ulang."], ["PIRT atau BPOM MD?", "PIRT cocok untuk skala rumah tangga dan jenis pangan tertentu. Jika produk termasuk pangan berisiko lebih tinggi, diproduksi di skala industri, atau akan dipasarkan lebih luas, misalnya ke jaringan ritel modern yang mensyaratkan izin BPOM, jalur BPOM MD bisa menjadi pilihan. Kami bantu menilai jalur yang paling sesuai untuk produk Anda."]],
+        faq: [["Berapa lama proses pengurusan PIRT?", "Waktunya bergantung pada kesiapan dokumen, jadwal penyuluhan, dan pemeriksaan sarana di daerah Anda. Kami membantu menyiapkan data sejak awal agar proses tidak tertunda karena kekurangan dokumen."], ["Apakah PIRT bisa diurus secara online?", "Pengajuan dilakukan melalui sistem OSS, sedangkan penyuluhan dan pemeriksaan sarana mengikuti ketentuan dinas setempat. Konsultasi dengan kami dapat dilakukan sepenuhnya secara online."]] as string[][],
+        related: ["bpom-md-ml", "notifikasi-kosmetik"],
       },
       "notifikasi-kosmetik": {
         name: "Notifikasi Kosmetik BPOM",
@@ -430,6 +457,13 @@ const id = {
         question: "Apakah brand dengan produksi maklon dapat berkonsultasi?",
         answer:
           "Bisa. Jelaskan hubungan dengan produsen dan dokumen yang sudah tersedia agar kebutuhan pemohon serta produk dapat dipetakan.",
+        seoTitle: "Jasa BPOM Kosmetik & Notifikasi",
+        h1: "Jasa BPOM Kosmetik: Pendampingan Notifikasi Kosmetik",
+        metaDescription:
+          "Jasa BPOM kosmetik untuk brand skincare, maklon, dan importir: pendampingan notifikasi, cek formula, klaim, dan label. Konsultasi awal via WhatsApp.",
+        sections: [["Apa itu notifikasi kosmetik BPOM?", "Notifikasi kosmetik adalah pemberitahuan kepada BPOM yang wajib dilakukan sebelum produk kosmetik diedarkan di Indonesia. Produk yang notifikasinya disetujui mendapatkan nomor notifikasi yang dicantumkan pada label. Tanpa nomor ini, produk tidak dapat diedarkan secara legal, termasuk melalui marketplace."], ["Siapa yang dapat mengajukan?", "Pemohon notifikasi adalah badan usaha yang terdaftar, misalnya industri kosmetik, importir, atau pemilik brand yang bekerja sama dengan industri kosmetik melalui kontrak produksi (maklon). Pemilik brand maklon perlu memahami pembagian peran dan dokumen dengan pabrik sebelum pengajuan."], ["Informasi dan dokumen yang biasanya disiapkan", "Persiapan umumnya mencakup data badan usaha, formula atau komposisi bahan, informasi produsen, rancangan label, serta dokumen informasi produk (DIP) yang disimpan oleh pemohon. Bahan yang digunakan harus sesuai dengan ketentuan bahan kosmetik yang berlaku."], ["Klaim dan label yang perlu diperhatikan", "Klaim kosmetik tidak boleh mengarah ke klaim obat, misalnya menyembuhkan jerawat atau mengobati penyakit kulit. Klaim yang tidak sesuai menjadi salah satu penyebab umum notifikasi perlu diperbaiki. Label juga perlu memuat informasi wajib dalam bahasa Indonesia."], ["Setelah nomor notifikasi terbit", "Notifikasi memiliki masa berlaku dan perlu diperbarui sebelum habis. Perubahan formula, ukuran, atau nama produk juga dapat memerlukan notifikasi baru atau perubahan data. Kami bantu memetakan kebutuhan ini sejak awal."]],
+        faq: [["Apakah skincare maklon bisa didaftarkan atas nama brand saya?", "Bisa, selama pemohon memenuhi persyaratan dan memiliki kerja sama yang jelas dengan industri kosmetik. Kami bantu memetakan dokumen yang perlu disiapkan bersama pabrik."], ["Bagaimana dengan kosmetik impor?", "Kosmetik impor dinotifikasi oleh importir yang terdaftar. Biasanya diperlukan dokumen dari produsen di negara asal, seperti surat penunjukan dan informasi formula."]] as string[][],
+        related: ["bpom-md-ml", "pkrt"],
       },
       "bpom-md-ml": {
         name: "BPOM MD / ML",
@@ -449,6 +483,13 @@ const id = {
         question: "Apa perbedaan MD dan ML?",
         answer:
           "MD berkaitan dengan pangan olahan produksi dalam negeri, sedangkan ML berkaitan dengan pangan olahan impor. Kesesuaian jalur dan persyaratan tetap perlu ditinjau untuk produk Anda.",
+        seoTitle: "Jasa BPOM MD/ML Makanan & Minuman",
+        h1: "Jasa BPOM MD / ML untuk Makanan dan Minuman",
+        metaDescription:
+          "Jasa BPOM MD/ML untuk makanan dan minuman lokal maupun impor: cek jalur registrasi, persiapan dokumen, uji lab, dan label. Konsultasi via WhatsApp.",
+        sections: [["Apa itu BPOM MD dan ML?", "Nomor izin edar BPOM MD diberikan untuk pangan olahan yang diproduksi di dalam negeri, sedangkan ML untuk pangan olahan impor. Nomor ini dicantumkan pada label dan menunjukkan produk telah melalui penilaian keamanan, mutu, dan label oleh BPOM."], ["Kapan produk membutuhkan BPOM MD?", "Umumnya ketika pangan diproduksi di skala industri, termasuk jenis pangan yang tidak dapat memakai PIRT seperti pangan beku, susu dan olahannya, atau minuman tertentu, maupun ketika produk akan dipasarkan secara luas. Pemilik brand yang memakai jasa produksi pihak lain juga dapat menempuh jalur ini sesuai ketentuan."], ["Persiapan registrasi", "Persiapan umumnya meliputi perizinan usaha dan data sarana produksi, komposisi dan proses produksi, hasil uji laboratorium produk, serta rancangan label sesuai ketentuan. Untuk MD, sarana produksi perlu menerapkan cara produksi pangan olahan yang baik (CPPOB). Untuk ML, importir menyiapkan dokumen dari produsen di negara asal."], ["Label pangan olahan", "Label wajib memuat informasi seperti nama produk, komposisi, berat bersih, nama dan alamat produsen atau importir, tanggal kedaluwarsa, dan nomor izin edar. Ketidaksesuaian label sering menjadi alasan perbaikan saat evaluasi."], ["Dari PIRT ke BPOM MD", "Usaha yang tumbuh dari skala rumah tangga sering perlu beralih dari PIRT ke BPOM MD. Kami bantu memetakan apa yang perlu disiapkan, dari sarana produksi hingga label, agar peralihan berjalan lebih terarah."]],
+        faq: [["Berapa lama registrasi BPOM MD?", "Durasinya bergantung pada kategori risiko produk, kelengkapan dokumen, dan hasil evaluasi BPOM. Kami tidak menjanjikan durasi tertentu, tetapi membantu agar dokumen lengkap sejak awal."], ["Apakah perlu uji laboratorium?", "Pada umumnya ya. Parameter uji ditentukan sesuai jenis pangan. Kami bantu memetakan parameter yang relevan sebelum Anda melakukan pengujian."]] as string[][],
+        related: ["spp-irt", "notifikasi-kosmetik"],
       },
     },
     articles: {
