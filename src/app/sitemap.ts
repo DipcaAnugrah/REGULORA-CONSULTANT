@@ -15,10 +15,8 @@ const pages = [
   ...legalSlugs.map((l) => "/" + l),
 ];
 // trailingSlash: true — list the final URLs, not ones that 301-redirect.
-const url = (path: string) => {
-  const p = path === "/" ? "/" : path + "/";
-  return siteUrl + (p.startsWith("//") ? p.slice(1) : p);
-};
+// "/en/" already ends with a slash; adding another produced "/en//".
+const url = (path: string) => siteUrl + (path.endsWith("/") ? path : path + "/");
 export default function sitemap(): MetadataRoute.Sitemap {
   if (!launchReady) return [];
   return pages.flatMap((page) =>
